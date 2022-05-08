@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="UniBSFpLib" level="project" />
     <orderEntry type="library" name="serina_intellij" level="project" />
+    <orderEntry type="library" name="UniBSFpLib1" level="project" />
   </component>
 </module>

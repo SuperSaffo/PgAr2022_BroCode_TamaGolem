@@ -1,7 +1,6 @@
 package it.unibs.fp.tamagolem;
 
-import java.util.ArrayList;
-import java.util.Random;
+import it.unibs.fp.librerie.Metodi;
 
 import static it.unibs.fp.tamagolem.Battaglia.MAX_DANNO;
 import static it.unibs.fp.tamagolem.Battaglia.N;
@@ -35,9 +34,9 @@ public class Equilibrio {
 
         for(int i = 0; i < N; i++) {
             for(int j = 0; j < N; j++) {
-                if(matrix[i][j] <= 0)
-                    System.out.print("0" + "\t\t");
-                else
+                //if(matrix[i][j] <= 0)
+                //    System.out.print("0" + "\t\t");
+                //else
                     System.out.print(matrix[i][j] + "\t\t");
             }
             System.out.println();

@@ -1,25 +1,31 @@
 package it.unibs.fp.tamagolem;
 
+import static it.unibs.fp.tamagolem.Battaglia.V;
+
 public class TamaGolem {
-    private int hp;
-    private Nodi[] pietre;
+    private int hp = V;
+    private Elementi[] pietre;
 
-    public TamaGolem(int hp) {
-        this.hp = hp;
+    public TamaGolem(Elementi[] pietre) {
+        this.pietre = pietre;
     }
 
-    public void setHp(int hp) {
-        this.hp = hp;
+    public TamaGolem() {
     }
+
+    public void dannoInflitto(int danno) {
+        this.hp += danno;
+    }
+
     public int getHp() {
         return hp;
     }
 
-    public Nodi[] getPietre() {
+    public Elementi[] getPietre() {
         return pietre;
     }
 
-    public void setPietre(Nodi[] pietre) {
+    public void setPietre(Elementi[] pietre) {
 
 
         //this.pietre = g;

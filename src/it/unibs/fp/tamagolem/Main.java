@@ -9,7 +9,7 @@ public class Main {
 
     public static void main(String[] args) {
         Equilibrio eq = new Equilibrio();
-        eq.generaEquilibrio();
+        //eq.generaEquilibrio();
 
         Battaglia b = new Battaglia();
 
