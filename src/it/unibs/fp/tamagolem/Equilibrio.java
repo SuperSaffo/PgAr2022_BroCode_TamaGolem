@@ -16,7 +16,6 @@ public class Equilibrio {
     }
 
     public void generaEquilibrio() {
-        //for(int i = Nodi.valueOf("ARIA").ordinal(); i < N - 1; i++) {
         for(int i = 0; i < N - 1; i++) {
             int j;
             for(j = i; j < N - 1; j++) {
@@ -27,6 +26,7 @@ public class Equilibrio {
                     matrix[j][i] = - matrix[i][j];
                 }
             }
+
             if(j == N - 1) {
                 matrix[i][j] = calcolaSomma(matrix[i], N);
                 matrix[j][i] = - matrix[i][j];
@@ -36,16 +36,23 @@ public class Equilibrio {
         }
     }
 
-    public static int calcolaSomma(int[] matrix, int n) {
+    public static int calcolaSomma(int[] riga, int n) {
         int somma = 0;
         for(int i = 0; i < n - 1; i++)
-            somma += matrix[i];
+            somma += riga[i];
 
-        return ( - somma);
+        return (- somma);
     }
 
     public void stampaEquilibrio () {
+        System.out.print("\t\t");
+        for(int i = 0; i < N; i++)
+            System.out.print(Elementi.getElemento(i) + "\t");
+
+        System.out.println("");
+
         for(int i = 0; i < N; i++) {
+            System.out.print(Elementi.getElemento(i) + "\t");
             for(int j = 0; j < N; j++) {
                 if(matrix[i][j] <= 0)
                     System.out.print("0" + "\t\t");

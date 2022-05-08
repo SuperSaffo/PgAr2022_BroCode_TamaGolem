@@ -214,7 +214,10 @@ public class Battaglia {
         }
     }
 
-
+    public void stampaEquilibrioBattaglia() {
+        System.out.println("EQUILIBRIO DELLA PARTITA");
+        equilibrio.stampaEquilibrio();
+    }
 
 
 

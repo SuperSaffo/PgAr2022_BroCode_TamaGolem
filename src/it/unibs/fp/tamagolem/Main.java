@@ -1,6 +1,7 @@
 package it.unibs.fp.tamagolem;
 
 import it.unibs.fp.mylib.EstrazioniCasuali;
+import it.unibs.fp.mylib.InputDati;
 
 import java.util.Random;
 
@@ -28,16 +29,18 @@ public class Main {
                 System.out.println("-------------------------");
             }
 
-        }while(scelta);
+            battaglia.stampaEquilibrioBattaglia();
 
-
-    }
-
-    public static void (){
+        }while(nuovaPartita());
 
     }
-    
 
+    public static boolean nuovaPartita (){
 
-
+        if (InputDati.yesOrNo("Nuova partita?")){
+           return  true;
+        }
+        return  false;
+    }
 }
+
