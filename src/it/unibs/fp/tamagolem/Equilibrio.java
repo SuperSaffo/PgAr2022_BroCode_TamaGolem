@@ -57,8 +57,11 @@ public class Equilibrio {
      * <p>L'ultima colonna e' data dal numero necessario a fare si che la somma della riga equivalga a 0</p>
      * <p>se l'ultimo numero risulta Maggiore o Minore della danno massimo o -massimo oppure 0 viene generata una nuova riga</p>
      * <p>Se avvengono troppe iterazioni del ciclo viene ritornato falso</p>
-     * <p>La matrice possiede sia numeri positivi che negativi, i numeri negativi vengono utilizzati per calcolare piu' facilmente </p>
+     * <p>La matrice possiede sia numeri positivi che negativi,
+     * i numeri negativi vengono utilizzati per calcolare piu' facilmente la matrice
+     * e per calcolare piu' facilmente il vincitore dello scontro tra 2 Golem</p>
      *
+     * @see Metodi#generateRandom(int, int)
      * @see Equilibrio#calcolaSomma(int[], int)
      * @see Equilibrio#setMatrix(int[][])
      * @return Ritorna falso se avvengono troppe iterazioni, altrimenti vero;
@@ -67,7 +70,10 @@ public class Equilibrio {
         int nIter = 0;
         int[][] matrix = new int[N][N];
 
-         for(int i = 0; i < N - 1; i++) {
+        /*
+         * L'ULTIMA RIGA SI GENERA CON IL CALCOLO DEI VALORI DELL'ULTIMO ELEMENTO DI OGNI RIGA PRECEDENTE
+         */
+        for(int i = 0; i < N - 1; i++) {
             int j;
             for(j = i; j < N - 1; j++) {
                 /*
@@ -86,11 +92,16 @@ public class Equilibrio {
             }
             /*
              * L'ULTIMO VALORE DELLA RIGA E' UGUALE ALLA DIFFERENZA TRA 0 E LA SOMMA DI TUTTI I VALORI PRECEDENTI SULLA RIGA
-             * CONTROLLO SULLA VALIDITA' DELL'ULTIMO VALORE
+             * IL VALORE VIENE SALVATO ANCHE SUL SIMMETRICO
              */
             if(j == N - 1) {
                 matrix[i][j] = calcolaSomma(matrix[i], N);
                 matrix[j][i] = - matrix[i][j];
+                /*
+                 * CONTROLLO SULLA VALIDITA' DELL'ULTIMO VALORE
+                 * IL VALORE DEVE ESSERE COOMPRESO TRA IL MAX_DANNO E MIN_DANNO E DEVE ESSERE DIVERSO DA 0
+                 * SE NON RISPETTA QUESTI ALLORA SI RIGENERA LA RIGA
+                 */
                 if(matrix[i][j] > MAX_DANNO || matrix[i][j] < -MAX_DANNO || matrix[i][j] == 0)
                     i--;
             }
@@ -106,6 +117,14 @@ public class Equilibrio {
         return true;
     }
 
+    /**
+     * Metodo per calcolare la somma dei valori di una riga e ritornare l'opposto
+     * <p>L'opposto della somma equivale al valore necessario per rendere la somma dell'intera riga della matrice uguale a 0</p>
+     *
+     * @param riga Array dio valori da sommare
+     * @param n Dimensione dell'Array
+     * @return Ritorna l'opposto della somma
+     */
     public static int calcolaSomma(int[] riga, int n) {
         int somma = 0;
         for(int i = 0; i < n - 1; i++)
@@ -114,13 +133,26 @@ public class Equilibrio {
         return (- somma);
     }
 
+    /**
+     * Metodo per stampare l'equilibrio a fine programma
+     * <p>Vengono stampati inizialmente su una riga gli elementi</p>
+     * <p>Prima di ogni riga viene stampato l'elemento a cui corrisponde</p>
+     * <p>I valori negativi vengono stampati come zeri per semplificare la lettura dell'equilibrio</p>
+     *
+     * @see Equilibrio#generaEquilibrio()
+     */
     public void stampaEquilibrio () {
-        System.out.print("\t\t\t");
+        //STAMPA DELLA PRIMA RIGA CON GLI ELEMENTI
+        System.out.print("\t\t-->\t");
         for(int i = 0; i < N; i++)
             System.out.print(Elementi.getElemento(i) + "\t");
-
+        //RIGA DI A CAPO PER FORMATTAZIONE
         System.out.println();
-
+        /*
+         * PRIMA DI OGNI RIGA VIENE STAMPATO L'ELEMENTO
+         * STAMPA DELLA MATRICE
+         * I VALORI NEGATIVI VENGONO STAMPATI COME 0
+         */
         for(int i = 0; i < N; i++) {
             System.out.print(Elementi.getElemento(i) + "\t\t");
             for(int j = 0; j < N; j++) {
