@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="serina_intellij">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../Librerie/serina_intellij.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
