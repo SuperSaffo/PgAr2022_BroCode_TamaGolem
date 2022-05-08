@@ -1,5 +1,8 @@
 package it.unibs.fp.tamagolem;
 
+/**
+ * Classe enum degli elementi
+ */
 public enum Elementi {
     ARIA,
     FUOCO,
@@ -8,7 +11,7 @@ public enum Elementi {
     LUCE,
     BUIO;
 
-    private static Elementi[] elementi = Elementi.values();
+    private static final Elementi[] elementi = Elementi.values();
 
     /**
      * Metodo per restituire un Elemento di Elementi data la posizione
@@ -20,7 +23,12 @@ public enum Elementi {
         return elementi[i];
     }
 
+    /**
+     * Metodo
+     * @param e elemento
+     * @return ritorna la posizione di un elemento
+     */
     public static int getPosElemento(Elementi e) {
-        return Elementi.valueOf(e.toString()).ordinal();   // ordinal da la pos nell' enum
+        return Elementi.valueOf(e.toString()).ordinal();   // ORDIANAL DA LA POS NELL'ENUM
     }
 }

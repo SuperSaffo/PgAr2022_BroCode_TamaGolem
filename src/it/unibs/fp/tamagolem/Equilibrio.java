@@ -5,35 +5,105 @@ import it.unibs.fp.librerie.Metodi;
 import static it.unibs.fp.tamagolem.Battaglia.MAX_DANNO;
 import static it.unibs.fp.tamagolem.Battaglia.N;
 
+/**
+ * Classe Equilibrio per la generazione dell'equilibrio del mondo
+ */
 public class Equilibrio {
+    /**
+     * Matrice associativa per il grafo pesato e direzionale dell'equilibrio
+     */
     int[][] matrix = new int[N][N];
 
+    /**
+     * Costruttore vuoto dell'equilibrio
+     */
     public Equilibrio() {
     }
 
+    /**
+     * Getter di un valore della matrice date le coordinate
+     * @param r Indice della riga
+     * @param c Indice della colonna
+     * @return Ritorna l'elemento iesimo alla colonna jesima
+     */
     public int getValoreMatrix(int r, int c) {
         return matrix[r][c];
     }
 
-    public void generaEquilibrio() {
-        for(int i = 0; i < N - 1; i++) {
+    /**
+     * Setter della matrice
+     * @param matrix Matrice da inserire
+     */
+    public void setMatrix(int[][] matrix) {
+        this.matrix = matrix;
+    }
+
+    /**
+     * Metodo per generare la matrice associativa in modo che sia accettabile
+     * <p>La matrice viene rigenerata fin quando viene restituito falso</p>
+     *
+     * @see Equilibrio#generaEquilibrio()
+     */
+    public void generaEquilibrioControllo() {
+        boolean isCorrect;
+        do{
+            isCorrect = generaEquilibrio();
+        }while(!isCorrect);
+    }
+
+    /**
+     * Metodo per generare la matrice associativa
+     * <p>Vengono riempite N-1 righe e N-1 colonne con valori casuali</p>
+     * <p>L'ultima colonna e' data dal numero necessario a fare si che la somma della riga equivalga a 0</p>
+     * <p>se l'ultimo numero risulta Maggiore o Minore della danno massimo o -massimo oppure 0 viene generata una nuova riga</p>
+     * <p>Se avvengono troppe iterazioni del ciclo viene ritornato falso</p>
+     * <p>La matrice possiede sia numeri positivi che negativi, i numeri negativi vengono utilizzati per calcolare piu' facilmente </p>
+     *
+     * @see Equilibrio#calcolaSomma(int[], int)
+     * @see Equilibrio#setMatrix(int[][])
+     * @return Ritorna falso se avvengono troppe iterazioni, altrimenti vero;
+     */
+    public boolean generaEquilibrio() {
+        int nIter = 0;
+        int[][] matrix = new int[N][N];
+
+         for(int i = 0; i < N - 1; i++) {
             int j;
             for(j = i; j < N - 1; j++) {
+                /*
+                 * I VALORI SULLA DIAGONALE VENGONO INIZIALIZZATI A 0
+                 * GLI ALTRI VALORI VENGONO GENERATI RANDOMICAMENTE COMPRESI TRA -MAX_DANNO E MAX_DANNO
+                 * NON VENGONO GENERATI ZERI
+                 * NELLA MATRICE OGNI CELLA HA UN VALORE OPPOSTO RISPETTO A QUELLO DELLA CELLA SIMMETRICA SULLA DIAGONALE DI ZERI
+                 */
                 if(i == j)
                     matrix[i][j] = 0;
                 else {
                     matrix[i][j] = Metodi.generateRandom(-MAX_DANNO, MAX_DANNO);
                     matrix[j][i] = - matrix[i][j];
                 }
+                nIter++;
             }
-
+            /*
+             * L'ULTIMO VALORE DELLA RIGA E' UGUALE ALLA DIFFERENZA TRA 0 E LA SOMMA DI TUTTI I VALORI PRECEDENTI SULLA RIGA
+             * CONTROLLO SULLA VALIDITA' DELL'ULTIMO VALORE
+             */
             if(j == N - 1) {
                 matrix[i][j] = calcolaSomma(matrix[i], N);
                 matrix[j][i] = - matrix[i][j];
                 if(matrix[i][j] > MAX_DANNO || matrix[i][j] < -MAX_DANNO || matrix[i][j] == 0)
                     i--;
             }
+
+            //SE AVVENGONO TROPPE ITERAZIONI DEL CICLO PER LA GENERAZIONE DELLA MATRICE SI RITORNA FALSO
+            if(nIter > 200)
+                return false;
         }
+
+        //SE IL CICLO SI CONCLUDE VIENE RICHIAMATO IL SETTER DELLA MATRICE
+        setMatrix(matrix);
+        //RITORNA TRUE DATO CHE LA MATRICE E' CORRETTA
+        return true;
     }
 
     public static int calcolaSomma(int[] riga, int n) {
@@ -45,17 +115,17 @@ public class Equilibrio {
     }
 
     public void stampaEquilibrio () {
-        System.out.print("\t\t");
+        System.out.print("\t\t\t");
         for(int i = 0; i < N; i++)
             System.out.print(Elementi.getElemento(i) + "\t");
 
-        System.out.println("");
+        System.out.println();
 
         for(int i = 0; i < N; i++) {
-            System.out.print(Elementi.getElemento(i) + "\t");
+            System.out.print(Elementi.getElemento(i) + "\t\t");
             for(int j = 0; j < N; j++) {
                 if(matrix[i][j] <= 0)
-                    System.out.print("0" + "\t\t");
+                   System.out.print("0" + "\t\t");
                 else
                     System.out.print(matrix[i][j] + "\t\t");
             }

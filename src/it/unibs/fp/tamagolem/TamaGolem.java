@@ -3,41 +3,45 @@ package it.unibs.fp.tamagolem;
 import static it.unibs.fp.tamagolem.Battaglia.P;
 import static it.unibs.fp.tamagolem.Battaglia.V;
 
+/**
+ * Classe Golem
+ */
+
 public class TamaGolem {
     private int hp = V;
     private Elementi[] pietre;
 
+    /**
+     * Costruttore della classe Golem
+     * @param pietre numero di pietre per ogni golem
+     */
     public TamaGolem(Elementi[] pietre) {
         this.pietre = pietre;
     }
 
-    public int getHp() {
-        return hp;
-    }
-
+    /**
+     * Getter
+     * @param i posizione della pietra
+     * @return ritorna la pietra alla posizione iesima
+     */
     public Elementi getPietra(int i) {
         return pietre[i];
     }
 
+    /**
+     * Metodo che calcola la vita rimanente
+     * @param danno danno inflitto durante lo scontro
+     */
     public void dannoInflitto(int danno) {
         this.hp -= danno;
     }
 
-    public Elementi[] getPietre() {
-        return pietre;
-    }
-
-    public void setPietre(Elementi[] pietre) {
-
-
-        //this.pietre = g;
-    }
-
+    /**
+     * Metodo che controlla che il golem abbia ancora vita
+     * @return ritorna true se il golem è morto, false se vivo
+     */
     public boolean isMorto() {
-        if(this.hp <= 0)
-            return true;
-        else
-            return false;
+        return this.hp <= 0;
     }
 
 

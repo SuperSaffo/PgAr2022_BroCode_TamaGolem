@@ -5,6 +5,7 @@ import it.unibs.fp.librerie.MyMenu;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 public class Battaglia {
     public static final int N = Elementi.values().length;                                   //NUMERO ELEMENTI
     public static final int P = (int) Math.ceil((double)(N + 1) / 3) + 1;                   //PIETRE PER GOLEM
@@ -13,25 +14,57 @@ public class Battaglia {
     public static final int V = 100;                                                        //VITA GOLEM
     public static final int MAX_DANNO = 100;                                                //DANNO MASSIMO
 
+    /**
+     * Equilibrio del sistema
+     * @see Equilibrio
+     */
     private Equilibrio equilibrio;
     private ArrayList<Elementi> pietreComuni;
+    /**
+     * Giocatore 1
+     * @see Giocatore
+     */
     private Giocatore giocatore1;
+    /**
+     * Giocatore 2
+     * @see Giocatore
+     */
     private Giocatore giocatore2;
+    /**
+     * Numero di pietra del golem che viene usata nella sfida
+     * <p>Viene resettata quando si cambia il Golem</p>
+     */
     private int posPietra1 = 0;
+    /**
+     * Numero di pietra del golem che viene usata nella sfida
+     * <p>Viene resettata quando si cambia il Golem</p>
+     */
     private int posPietra2 = 0;
 
+    /**
+     * Costrutture della classe battaglia
+     * <p>Viene creato l'ArrayList contenente le S pietre, ci sono P pietre per ognuno degli N elementi</p>
+     *
+     * @see Elementi
+     */
     public Battaglia() {
         this.pietreComuni = creaArrayPietre();
     }
 
-    public ArrayList<Elementi> getPietreComuni() {
-        return pietreComuni;
-    }
-
+    /**
+     * Getter del giocatore 1
+     *
+     * @return Ritorna il giocatore 1
+     */
     public Giocatore getGiocatore1() {
         return giocatore1;
     }
 
+    /**
+     * Getter del giocatore 2
+     *
+     * @return Ritorna il giocatore 2
+     */
     public Giocatore getGiocatore2() {
         return giocatore2;
     }
@@ -40,13 +73,13 @@ public class Battaglia {
      * Metodo per iniziare la battaglia
      * <p>Viene generato il nuovo equilibrio</p>
      * <p>Vengono generati i 2 giocatori</p>
-     * <p>Ogni giocatore sceglie le prime P pietre per il loro primo Golem</p>
      *
-     * @see Equilibrio#generaEquilibrio()
+     * @see Equilibrio#generaEquilibrioControllo()
+     * @see Battaglia#creaGiocatore()
      */
     public void setBattaglia() {
         this.equilibrio = new Equilibrio();
-        equilibrio.generaEquilibrio();
+        equilibrio.generaEquilibrioControllo();
         System.out.println("GIOCATORE 1: ");
         this.giocatore1 = creaGiocatore();
         System.out.println("GIOCATORE 2: ");
@@ -109,7 +142,7 @@ public class Battaglia {
 
     /**
      * Metodo con menu per scegliere la pietra da dare al proprio golem
-     *
+     * <p>Ripete la scelta se quella inserita non e' accettabile<p/>
      * @see Battaglia#listaPietreConteggio()
      * @return Ritorna il nome della pietra scelta
      */
@@ -126,7 +159,7 @@ public class Battaglia {
 
     /**
      * Metodo per ritornare la lista di pietre con il numero rimanenti per ciascuna
-     * <p>Se si utilizzano tutte le pietre di un tipo, questa non viene piu' mostrata</p>
+     * <p>Se si utilizzano tutte le pietre di un tipo, questa viene sostituita con una "X"</p>
      *
      * @see Collections
      * @see Elementi#getElemento(int) 
@@ -143,16 +176,31 @@ public class Battaglia {
         return pietreScelta.toArray(new String[0]);
     }
 
-    /**
-     * Metodo per visualizzare le pietre ancora disponibili
-     * @see Battaglia#listaPietreConteggio()
-     */
+    /*
+        /**
+         * Metodo per visualizzare le pietre ancora disponibili
+         * @see Battaglia#listaPietreConteggio()
+         */
+        /*
     public void stampaListaConteggio() {
         String[] lista = listaPietreConteggio();
         for(String s : lista)
             System.out.println(s);
     }
+    */
 
+    /**
+     * Metodo per giocare il turno tra giocatore 1 e giocatore 2
+     * <p>Ogni giocatore possiede un Golem che attacca con una pietra di quelle possedute</p>
+     * <p>Vengono stampati a video i 2 elementi che si scontrano</p>
+     * <p>Finito il scontro con la prima pietra di ciascuno si incrementa il turno e la pietra da utilizzare</p>
+     * <p>Al termine lo sconfitto genera un nuovo Golem per il turno successivo</p>
+     *
+     * @see Battaglia#confrontoGolem(Elementi, Elementi)
+     * @see Battaglia#setPosPietra1()
+     * @see Battaglia#setPosPietra2()
+     * @see Battaglia#nuovoGolemPerSconfitto()
+     */
     public void turnoConPerdente() {
         int turno = 0;
 
@@ -173,13 +221,31 @@ public class Battaglia {
         nuovoGolemPerSconfitto();
     }
 
+    /**
+     * Metodo per incrementare la posizione della pietra nell'Array di pietre del Golem 1
+     * <p>La posizione viene incrementata di 1 e si calcola il resto con il numero di pietre P, in modo che sia compresa tra 0 e P-1</p>
+     */
     public void setPosPietra1() {
         this.posPietra1 = (this.posPietra1 + 1) % P;
     }
+    /**
+     * Metodo per incrementare la posizione della pietra nell'Array di pietre del Golem 2
+     * <p>La posizione viene incrementata di 1 e si calcola il resto con il numero di pietre P, in modo che sia compresa tra 0 e P-1</p>
+     */
     public void setPosPietra2() {
         this.posPietra2 = (this.posPietra2 + 1) % P;
     }
 
+    /**
+     * Metodo per confrontare i 2 Golem, in base al danno viene scelto chi riceve danno
+     * <p>Se il danno e' positivo allora vince 1 e perde 2</p>
+     * <p>Se il danno e' negativo allora vince 2 e perde 1</p>
+     * <p>Se gli elementi coincidono e' un pareggio</p>
+     * <p>Se il golem perdente muore non viene stampato il danno ricevuto dal colpo fatale</p>
+     *
+     * @param e1 Elemento della pietra del Golem 1
+     * @param e2 Elemento della pietra del Golem 2
+     */
     public void confrontoGolem(Elementi e1, Elementi e2) {
         int danno = equilibrio.getValoreMatrix(Elementi.getPosElemento(e1), Elementi.getPosElemento(e2));
         if(danno > 0) {
@@ -201,6 +267,17 @@ public class Battaglia {
         }
     }
 
+    /**
+     * Metodo per generare il nuovo Golem del giocatore perdente
+     * <p>Il golem viene generato se il giocatore non e' sconfitto e se il suo golem e' morto</p>
+     * <p>La posizione della pietra iniziale del giocatore perdente viene resettata</p>
+     *
+     * @see TamaGolem#isMorto()
+     * @see Giocatore#isSconfitto()
+     * @see Giocatore#generaGolem(Elementi[])
+     * @see Battaglia#posPietra1
+     * @see Battaglia#posPietra2
+     */
     public void nuovoGolemPerSconfitto(){
         if(!giocatore1.isSconfitto() && giocatore1.getGolem().isMorto()) {
             Elementi[] pietreScelte = scegliPietre();
@@ -214,6 +291,10 @@ public class Battaglia {
         }
     }
 
+    /**
+     * Metodo per stampare l'equilibrio al termine della partita
+     * @see Equilibrio#stampaEquilibrio()
+     */
     public void stampaEquilibrioBattaglia() {
         System.out.println("EQUILIBRIO DELLA PARTITA");
         equilibrio.stampaEquilibrio();
