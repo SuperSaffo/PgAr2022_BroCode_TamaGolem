@@ -17,6 +17,8 @@ public class Battaglia {
     private ArrayList<Elementi> pietreComuni;
     private Giocatore giocatore1;
     private Giocatore giocatore2;
+    private int posPietra1 = 0;
+    private int posPietra2 = 0;
 
     public Battaglia() {
         this.pietreComuni = creaArrayPietre();
@@ -24,6 +26,14 @@ public class Battaglia {
 
     public ArrayList<Elementi> getPietreComuni() {
         return pietreComuni;
+    }
+
+    public Giocatore getGiocatore1() {
+        return giocatore1;
+    }
+
+    public Giocatore getGiocatore2() {
+        return giocatore2;
     }
 
     /**
@@ -37,7 +47,9 @@ public class Battaglia {
     public void setBattaglia() {
         this.equilibrio = new Equilibrio();
         equilibrio.generaEquilibrio();
+        System.out.println("GIOCATORE 1: ");
         this.giocatore1 = creaGiocatore();
+        System.out.println("GIOCATORE 2: ");
         this.giocatore2 = creaGiocatore();
     }
 
@@ -141,25 +153,69 @@ public class Battaglia {
             System.out.println(s);
     }
 
+    public void turnoConPerdente() {
+        int turno = 0;
 
-    public void turno() {
-        int i = 0;
-        while(!giocatore1.isMorto() && !giocatore2.isMorto()){
-            confrontoGolem(i);
-            i++;
+        while(!giocatore1.getGolem().isMorto() && !giocatore2.getGolem().isMorto()){
+
+            System.out.println("--------------------------------");
+            System.out.println("Turno " + (turno + 1) + ":");
+            Elementi e1 = giocatore1.getGolem().getPietra(posPietra1);
+            Elementi e2 = giocatore2.getGolem().getPietra(posPietra2);
+            System.out.println("Scontro: 1) " + e1 + " > contro > 2) " + e2);
+            confrontoGolem(e1, e2);
+
+            turno++;
+            setPosPietra1();
+            setPosPietra2();
         }
+
+        nuovoGolemPerSconfitto();
     }
 
-    public void confrontoGolem(int i) {
-        int danno = equilibrio.getValoreMatrix(Elementi.getPosElemento(giocatore1.getGolem().getPietra(i)), Elementi.getPosElemento(giocatore2.getGolem().getPietra(i)))
+    public void setPosPietra1() {
+        this.posPietra1 = (this.posPietra1 + 1) % P;
+    }
+    public void setPosPietra2() {
+        this.posPietra2 = (this.posPietra2 + 1) % P;
+    }
+
+    public void confrontoGolem(Elementi e1, Elementi e2) {
+        int danno = equilibrio.getValoreMatrix(Elementi.getPosElemento(e1), Elementi.getPosElemento(e2));
         if(danno > 0) {
+            System.out.println(e1 + " > vince contro > " + e2);
             giocatore2.getGolem().dannoInflitto(Math.abs(danno));
-        }
-        else if (danno < 0)
-            giocatore1.getGolem().dannoInflitto(Math.abs(danno));
+            if(giocatore2.getGolem().isMorto())
+                System.out.println("Il Golem 2 e' morto");
+            else
+                System.out.println("Il Golem 2 ha subito un danno di: " + Math.abs(danno));
 
-        System.out.println("Vita Golem 1: " + giocatore1.getGolem().getHp());
-        System.out.println("Vita Golem 2: " + giocatore2.getGolem().getHp());
+        }
+        else if (danno < 0) {
+            System.out.println(e2 + " > vince contro > " + e1);
+            giocatore1.getGolem().dannoInflitto(Math.abs(danno));
+            if(giocatore1.getGolem().isMorto())
+                System.out.println("Il Golem 1 e' morto");
+            else
+                System.out.println("Il Golem 1 ha subito un danno di: " + Math.abs(danno));
+        }
     }
+
+    public void nuovoGolemPerSconfitto(){
+        if(!giocatore1.isSconfitto() && giocatore1.getGolem().isMorto()) {
+            Elementi[] pietreScelte = scegliPietre();
+            giocatore1.generaGolem(pietreScelte);
+            this.posPietra1 = 0;
+        }
+        else if(!giocatore2.isSconfitto() && giocatore2.getGolem().isMorto()){
+            Elementi[] pietreScelte = scegliPietre();
+            giocatore2.generaGolem(pietreScelte);
+            this.posPietra2 = 0;
+        }
+    }
+
+
+
+
 
 }

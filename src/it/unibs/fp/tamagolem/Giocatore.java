@@ -1,11 +1,11 @@
 package it.unibs.fp.tamagolem;
 
-import static it.unibs.fp.tamagolem.Battaglia.P;
+import static it.unibs.fp.tamagolem.Battaglia.G;
 
 public class Giocatore {
 
     private TamaGolem golem;
-    private int numeroGolem = P;
+    private int numeroGolem = G;
 
     public Giocatore(){
     }
@@ -22,13 +22,9 @@ public class Giocatore {
         this.numeroGolem--;
     }
 
-    public TamaGolem generaGolem(Elementi[] pietreScelte){
-        return new TamaGolem(pietreScelte);
-    }
-
-    public TamaGolem generaNuovoGolem(Elementi[] pietreScelte) {
+    public void generaGolem(Elementi[] pietreScelte){
         perdiGolem();
-        return generaGolem(pietreScelte);
+        this.golem = new TamaGolem(pietreScelte);
     }
 
     public boolean isMorto() {
@@ -53,6 +49,8 @@ public class Giocatore {
             return false;
 
     }
+
+    //public StringBuffer infoGiocatore(){}
 
 
 

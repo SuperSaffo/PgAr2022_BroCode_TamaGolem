@@ -34,24 +34,26 @@ public class Equilibrio {
                     i--;
             }
         }
-
-        for(int i = 0; i < N; i++) {
-            for(int j = 0; j < N; j++) {
-                //if(matrix[i][j] <= 0)
-                //    System.out.print("0" + "\t\t");
-                //else
-                    System.out.print(matrix[i][j] + "\t\t");
-            }
-            System.out.println();
-        }
     }
 
-    private static int calcolaSomma(int[] matrix, int n) {
+    public static int calcolaSomma(int[] matrix, int n) {
         int somma = 0;
         for(int i = 0; i < n - 1; i++)
             somma += matrix[i];
 
         return ( - somma);
+    }
+
+    public void stampaEquilibrio () {
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < N; j++) {
+                if(matrix[i][j] <= 0)
+                    System.out.print("0" + "\t\t");
+                else
+                    System.out.print(matrix[i][j] + "\t\t");
+            }
+            System.out.println();
+        }
     }
 
 }

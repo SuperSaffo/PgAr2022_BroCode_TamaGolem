@@ -1,5 +1,6 @@
 package it.unibs.fp.tamagolem;
 
+import static it.unibs.fp.tamagolem.Battaglia.P;
 import static it.unibs.fp.tamagolem.Battaglia.V;
 
 public class TamaGolem {
@@ -22,8 +23,6 @@ public class TamaGolem {
         this.hp -= danno;
     }
 
-
-
     public Elementi[] getPietre() {
         return pietre;
     }
@@ -37,7 +36,8 @@ public class TamaGolem {
     public boolean isMorto() {
         if(this.hp <= 0)
             return true;
-        return false;
+        else
+            return false;
     }
 
 
