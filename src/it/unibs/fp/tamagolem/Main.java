@@ -5,15 +5,16 @@ import it.unibs.fp.mylib.EstrazioniCasuali;
 import java.util.Random;
 
 public class Main {
-
-
     public static void main(String[] args) {
-        Equilibrio eq = new Equilibrio();
-        //eq.generaEquilibrio();
+        Battaglia battle = new Battaglia();
+        boolean scelta = false;
 
-        Battaglia b = new Battaglia();
+        do{
 
-        b.creaArrayPietre();
+        }while(scelta);
+
+
+        battle.creaArrayPietre();
 
     }
     

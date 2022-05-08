@@ -10,16 +10,19 @@ public class TamaGolem {
         this.pietre = pietre;
     }
 
-    public TamaGolem() {
-    }
-
-    public void dannoInflitto(int danno) {
-        this.hp += danno;
-    }
-
     public int getHp() {
         return hp;
     }
+
+    public Elementi getPietra(int i) {
+        return pietre[i];
+    }
+
+    public void dannoInflitto(int danno) {
+        this.hp -= danno;
+    }
+
+
 
     public Elementi[] getPietre() {
         return pietre;

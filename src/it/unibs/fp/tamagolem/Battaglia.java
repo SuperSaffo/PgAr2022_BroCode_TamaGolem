@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Battaglia {
-    public static final int N = Elementi.values().length;       //NUMERO ELEMENTI
-    public static final int P = (int) Math.ceil((double)(N + 1) / 3) + 1;       //PIETRE PER GOLEM
+    public static final int N = Elementi.values().length;                                   //NUMERO ELEMENTI
+    public static final int P = (int) Math.ceil((double)(N + 1) / 3) + 1;                   //PIETRE PER GOLEM
     public static final int G = (int) Math.ceil(((double)(N - 1) * (N - 2))/(2 * P));       //GOLEM PER GIOCATORE
-    public static final int S = (int) Math.ceil(((double)(2 * G * P) / N)) * N;         //PIETRE COMUNI
-    public static final int V = 100;        //VITA GOLEM
-    public static final int MAX_DANNO = 100;        //DANNO MASSIMO
+    public static final int S = (int) Math.ceil(((double)(2 * G * P) / N)) * N;             //PIETRE COMUNI
+    public static final int V = 100;                                                        //VITA GOLEM
+    public static final int MAX_DANNO = 100;                                                //DANNO MASSIMO
 
     private Equilibrio equilibrio;
     private ArrayList<Elementi> pietreComuni;
@@ -82,7 +82,7 @@ public class Battaglia {
      * <p>Le pietre vengono scelte tra quelle disponibili tra quelle comuni</p>
      *
      * @see Battaglia#menuPietre()
-     * @return Ritorna Array di Nodi con le pietre scelte
+     * @return Ritorna Array di Nodi con le P pietre scelte
      */
     public Elementi[] scegliPietre() {
         Elementi[] pietreGolem = new Elementi[P];
@@ -104,7 +104,10 @@ public class Battaglia {
     public String menuPietre() {
         String[] pietre = listaPietreConteggio();
         MyMenu menuPietre = new MyMenu("Scegli pietra per il golem: ", pietre);
-        int scelta = menuPietre.scegliNoZero();
+        int scelta;
+        do {
+            scelta = menuPietre.scegliNoZero();
+        }while(pietre[scelta - 1].equals("X"));
 
         return pietre[scelta - 1].split("\t")[0];
     }
@@ -114,13 +117,16 @@ public class Battaglia {
      * <p>Se si utilizzano tutte le pietre di un tipo, questa non viene piu' mostrata</p>
      *
      * @see Collections
+     * @see Elementi#getElemento(int) 
      * @return Ritorna array di String con pietre e loro quantita' se maggiore di 0
      */
     public String[] listaPietreConteggio() {
         ArrayList<String> pietreScelta = new ArrayList<>();
         for(int i = 0; i < N; i++) {
-            if(Collections.frequency(pietreComuni, Elementi.valueOf(Elementi.getElemento(i).toString())) > 0)
-                pietreScelta.add(Elementi.getElemento(i).toString() + "\t("+ Collections.frequency(pietreComuni, Elementi.valueOf(Elementi.getElemento(i).toString())) + ")");
+            if(Collections.frequency(pietreComuni, Elementi.getElemento(i)) > 0)
+                pietreScelta.add(Elementi.getElemento(i).toString() + "\t("+ Collections.frequency(pietreComuni, Elementi.getElemento(i)) + ")");
+            else
+                pietreScelta.add("X");
         }
         return pietreScelta.toArray(new String[0]);
     }
@@ -136,7 +142,24 @@ public class Battaglia {
     }
 
 
-    public void turno(Giocatore g1, Giocatore g2) {
-
+    public void turno() {
+        int i = 0;
+        while(!giocatore1.isMorto() && !giocatore2.isMorto()){
+            confrontoGolem(i);
+            i++;
+        }
     }
+
+    public void confrontoGolem(int i) {
+        int danno = equilibrio.getValoreMatrix(Elementi.getPosElemento(giocatore1.getGolem().getPietra(i)), Elementi.getPosElemento(giocatore2.getGolem().getPietra(i)))
+        if(danno > 0) {
+            giocatore2.getGolem().dannoInflitto(Math.abs(danno));
+        }
+        else if (danno < 0)
+            giocatore1.getGolem().dannoInflitto(Math.abs(danno));
+
+        System.out.println("Vita Golem 1: " + giocatore1.getGolem().getHp());
+        System.out.println("Vita Golem 2: " + giocatore2.getGolem().getHp());
+    }
+
 }

@@ -9,7 +9,10 @@ public class Equilibrio {
     int[][] matrix = new int[N][N];
 
     public Equilibrio() {
+    }
 
+    public int getValoreMatrix(int r, int c) {
+        return matrix[r][c];
     }
 
     public void generaEquilibrio() {

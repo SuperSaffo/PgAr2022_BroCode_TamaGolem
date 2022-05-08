@@ -18,17 +18,24 @@ public class Giocatore {
         return golem;
     }
 
-    public void setNumeroGolem(int numeroGolem) {
-        this.numeroGolem = numeroGolem;
+    public void perdiGolem() {
+        this.numeroGolem--;
     }
 
     public TamaGolem generaGolem(Elementi[] pietreScelte){
         return new TamaGolem(pietreScelte);
     }
 
-    public void isMorto() {
-        if(!golem.isMorto())
+    public TamaGolem generaNuovoGolem(Elementi[] pietreScelte) {
+        perdiGolem();
+        return generaGolem(pietreScelte);
+    }
+
+    public boolean isMorto() {
+        if(!golem.isMorto()) {
             System.out.println(golem.getHp());
+            return false;
+        }
         else {
             numeroGolem--;
             if (!isSconfitto())
@@ -36,6 +43,7 @@ public class Giocatore {
             //else
                 System.out.println("Nessun golem a disposizione");
         }
+        return true;
     }
 
     public boolean isSconfitto(){

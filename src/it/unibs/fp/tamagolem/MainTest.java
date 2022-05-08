@@ -5,6 +5,10 @@ public class MainTest {
         Battaglia b = new Battaglia();
         //b.creaArrayPietre();
         Elementi[] n = b.scegliPietre();
+        //b.stampaListaConteggio();
+
+        Elementi[] n1 = b.scegliPietre();
+
         b.stampaListaConteggio();
     }
 }
