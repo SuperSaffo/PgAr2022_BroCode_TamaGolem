@@ -7,12 +7,30 @@ import java.util.Collections;
 
 
 public class Battaglia {
-    public static final int N = Elementi.values().length;                                   //NUMERO ELEMENTI
-    public static final int P = (int) Math.ceil((double)(N + 1) / 3) + 1;                   //PIETRE PER GOLEM
-    public static final int G = (int) Math.ceil(((double)(N - 1) * (N - 2))/(2 * P));       //GOLEM PER GIOCATORE
-    public static final int S = (int) Math.ceil(((double)(2 * G * P) / N)) * N;             //PIETRE COMUNI
-    public static final int V = 100;                                                        //VITA GOLEM
-    public static final int MAX_DANNO = 100;                                                //DANNO MASSIMO
+    /**
+     * Numero di elementi
+     */
+    public static final int N = Elementi.values().length;
+    /**
+     * Numero di pietre per ogni Golem
+     */
+    public static final int P = (int) Math.ceil((double)(N + 1) / 3) + 1;
+    /**
+     * Numero di Golem per ogni giocatore
+     */
+    public static final int G = (int) Math.ceil(((double)(N - 1) * (N - 2))/(2 * P));
+    /**
+     * Numero di pietre comuni
+     */
+    public static final int S = (int) Math.ceil(((double)(2 * G * P) / N)) * N;
+    /**
+     * Vita di ogni Golem
+     */
+    public static final int V = 100;
+    /**
+     * Danno massimo provocabile da un Golem a un altro Golem
+     */
+    public static final int MAX_DANNO = 100;
 
     /**
      * Equilibrio del sistema
@@ -80,9 +98,11 @@ public class Battaglia {
     public void setBattaglia() {
         this.equilibrio = new Equilibrio();
         equilibrio.generaEquilibrioControllo();
-        System.out.println("GIOCATORE 1: ");
+        System.out.println("--------------------------------------------------");
+        System.out.println("|\tGIOCATORE 1:\t|");
         this.giocatore1 = creaGiocatore();
-        System.out.println("GIOCATORE 2: ");
+        System.out.println("--------------------------------------------------");
+        System.out.println("|\tGIOCATORE 2:\t|");
         this.giocatore2 = creaGiocatore();
     }
 
@@ -144,6 +164,8 @@ public class Battaglia {
      * Metodo con menu per scegliere la pietra da dare al proprio golem
      * <p>Ripete la scelta se quella inserita non e' accettabile<p/>
      * @see Battaglia#listaPietreConteggio()
+     * @see MyMenu#stampaMenuNoZero()
+     * @see MyMenu#scegliNoZero()
      * @return Ritorna il nome della pietra scelta
      */
     public String menuPietre() {
@@ -152,7 +174,7 @@ public class Battaglia {
         int scelta;
         do {
             scelta = menuPietre.scegliNoZero();
-        }while(pietre[scelta - 1].equals("X"));
+        }while(pietre[scelta - 1].split("\t")[1].equals("(X)"));
 
         return pietre[scelta - 1].split("\t")[0];
     }
@@ -171,7 +193,7 @@ public class Battaglia {
             if(Collections.frequency(pietreComuni, Elementi.getElemento(i)) > 0)
                 pietreScelta.add(Elementi.getElemento(i).toString() + "\t("+ Collections.frequency(pietreComuni, Elementi.getElemento(i)) + ")");
             else
-                pietreScelta.add("X");
+                pietreScelta.add(Elementi.getElemento(i).toString() + "\t(X)");
         }
         return pietreScelta.toArray(new String[0]);
     }
@@ -206,11 +228,11 @@ public class Battaglia {
 
         while(!giocatore1.getGolem().isMorto() && !giocatore2.getGolem().isMorto()){
 
-            System.out.println("--------------------------------");
-            System.out.println("Turno " + (turno + 1) + ":");
+            System.out.println("--------------------------------------------------");
+            System.out.println("Turno " + (turno + 1) + ":\t");
             Elementi e1 = giocatore1.getGolem().getPietra(posPietra1);
             Elementi e2 = giocatore2.getGolem().getPietra(posPietra2);
-            System.out.println("Scontro: 1) " + e1 + " > contro > 2) " + e2);
+            System.out.println("\t- (1) " + e1 + " > contro < " + e2 + " (2)");
             confrontoGolem(e1, e2);
 
             turno++;
@@ -249,22 +271,24 @@ public class Battaglia {
     public void confrontoGolem(Elementi e1, Elementi e2) {
         int danno = equilibrio.getValoreMatrix(Elementi.getPosElemento(e1), Elementi.getPosElemento(e2));
         if(danno > 0) {
-            System.out.println(e1 + " > vince contro > " + e2);
+            System.out.println("\t- " + e1 + " > vince contro > " + e2);
             giocatore2.getGolem().dannoInflitto(Math.abs(danno));
             if(giocatore2.getGolem().isMorto())
-                System.out.println("Il Golem 2 e' morto");
+                System.out.println("\t- Il Golem 2 e' morto");
             else
-                System.out.println("Il Golem 2 ha subito un danno di: " + Math.abs(danno));
+                System.out.println("\t- Il Golem 2 ha subito un danno di: " + Math.abs(danno));
 
         }
         else if (danno < 0) {
-            System.out.println(e2 + " > vince contro > " + e1);
+            System.out.println("\t- " + e2 + " > vince contro > " + e1);
             giocatore1.getGolem().dannoInflitto(Math.abs(danno));
             if(giocatore1.getGolem().isMorto())
-                System.out.println("Il Golem 1 e' morto");
+                System.out.println("\t- Il Golem 1 e' morto");
             else
-                System.out.println("Il Golem 1 ha subito un danno di: " + Math.abs(danno));
+                System.out.println("\t- Il Golem 1 ha subito un danno di: " + Math.abs(danno));
         }
+        else
+            System.out.println("\t- Nessun danno subito");
     }
 
     /**
@@ -296,7 +320,7 @@ public class Battaglia {
      * @see Equilibrio#stampaEquilibrio()
      */
     public void stampaEquilibrioBattaglia() {
-        System.out.println("EQUILIBRIO DELLA PARTITA");
+        System.out.println("EQUILIBRIO DELLA PARTITA: ");
         equilibrio.stampaEquilibrio();
     }
 

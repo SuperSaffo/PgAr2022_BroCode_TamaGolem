@@ -11,6 +11,9 @@ public enum Elementi {
     LUCE,
     BUIO;
 
+    /**
+     * Array contenente gli elementi
+     */
     private static final Elementi[] elementi = Elementi.values();
 
     /**
@@ -24,9 +27,9 @@ public enum Elementi {
     }
 
     /**
-     * Metodo
-     * @param e elemento
-     * @return ritorna la posizione di un elemento
+     * Metodo per restituire la posizione di un elemento nell'enum dato l'elemento
+     * @param e Elemento di cui restituire la posizione
+     * @return Ritorna la posizione di un elemento
      */
     public static int getPosElemento(Elementi e) {
         return Elementi.valueOf(e.toString()).ordinal();   // ORDIANAL DA LA POS NELL'ENUM

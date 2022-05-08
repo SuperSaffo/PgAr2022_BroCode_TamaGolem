@@ -71,7 +71,7 @@ public class Equilibrio {
         int[][] matrix = new int[N][N];
 
         /*
-         * L'ULTIMA RIGA SI GENERA CON IL CALCOLO DEI VALORI DELL'ULTIMO ELEMENTO DI OGNI RIGA PRECEDENTE
+         * L'ULTIMA RIGA E COLONNA DELLA MATRICE SI GENERA CON IL CALCOLO DEI VALORI DELL'ULTIMO ELEMENTO DI OGNI RIGA
          */
         for(int i = 0; i < N - 1; i++) {
             int j;

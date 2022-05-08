@@ -12,12 +12,11 @@ import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
-
-        Battaglia battaglia = new Battaglia();
-        battaglia.setBattaglia();
-
         //SCELTA SE RICOMINCIARE UNA NUOVA PARTITA
         do{
+            //SETUP DELLA BATTAGLIA
+            Battaglia battaglia = new Battaglia();
+            battaglia.setBattaglia();
             // TERMINAZIONE CICLO FIN QUANDO UNO DEI DUE GIOCATORI NON PERDE
             while(!battaglia.getGiocatore1().isSconfitto() && !battaglia.getGiocatore2().isSconfitto()) {
                 battaglia.turnoConPerdente();

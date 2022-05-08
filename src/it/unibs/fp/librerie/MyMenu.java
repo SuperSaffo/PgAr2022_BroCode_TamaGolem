@@ -3,7 +3,7 @@ package it.unibs.fp.librerie;
 import it.unibs.fp.librerie.InputDati;
 
 public class MyMenu {
-    final private static String CORNICE = "--------------------------------";
+    final private static String CORNICE = "--------------------------------------------------";
     final private static String VOCE_USCITA = "0\tEsci";
     final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
 
@@ -42,16 +42,15 @@ public class MyMenu {
         return InputDati.leggiIntero(RICHIESTA_INSERIMENTO, 1, voci.length);
     }
 
-
     public void stampaMenuNoZero() {
         System.out.println(CORNICE);
         System.out.println(titolo);
-        System.out.println(CORNICE);
+        //System.out.println();
         for (int i=0; i<voci.length; i++)
         {
             System.out.println( (i+1) + "\t" + voci[i]);
         }
-        System.out.println();
+        System.out.println(CORNICE);
     }
 
 }
