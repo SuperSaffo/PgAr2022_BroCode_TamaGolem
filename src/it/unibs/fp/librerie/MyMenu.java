@@ -1,7 +1,5 @@
 package it.unibs.fp.librerie;
 
-import it.unibs.fp.librerie.InputDati;
-
 public class MyMenu {
     final private static String CORNICE = "--------------------------------------------------";
     final private static String VOCE_USCITA = "0\tEsci";

@@ -1,9 +1,6 @@
-package it.unibs.fp.tamagolem;
+package it.unibs.fp.tamaGolem;
 
 import it.unibs.fp.librerie.Metodi;
-
-import static it.unibs.fp.tamagolem.Battaglia.MAX_DANNO;
-import static it.unibs.fp.tamagolem.Battaglia.N;
 
 /**
  * Classe Equilibrio per la generazione dell'equilibrio del mondo
@@ -12,7 +9,7 @@ public class Equilibrio {
     /**
      * Matrice associativa per il grafo pesato e direzionale dell'equilibrio
      */
-    int[][] matrix = new int[N][N];
+    int[][] matrix = new int[Battaglia.N][Battaglia.N];
 
     /**
      * Costruttore vuoto dell'equilibrio
@@ -68,14 +65,14 @@ public class Equilibrio {
      */
     public boolean generaEquilibrio() {
         int nIter = 0;
-        int[][] matrix = new int[N][N];
+        int[][] matrix = new int[Battaglia.N][Battaglia.N];
 
         /*
          * L'ULTIMA RIGA E COLONNA DELLA MATRICE SI GENERA CON IL CALCOLO DEI VALORI DELL'ULTIMO ELEMENTO DI OGNI RIGA
          */
-        for(int i = 0; i < N - 1; i++) {
+        for(int i = 0; i < Battaglia.N - 1; i++) {
             int j;
-            for(j = i; j < N - 1; j++) {
+            for(j = i; j < Battaglia.N - 1; j++) {
                 /*
                  * I VALORI SULLA DIAGONALE VENGONO INIZIALIZZATI A 0
                  * GLI ALTRI VALORI VENGONO GENERATI RANDOMICAMENTE COMPRESI TRA -MAX_DANNO E MAX_DANNO
@@ -85,7 +82,7 @@ public class Equilibrio {
                 if(i == j)
                     matrix[i][j] = 0;
                 else {
-                    matrix[i][j] = Metodi.generateRandom(-MAX_DANNO, MAX_DANNO);
+                    matrix[i][j] = Metodi.generateRandom(-Battaglia.MAX_DANNO, Battaglia.MAX_DANNO);
                     matrix[j][i] = - matrix[i][j];
                 }
                 nIter++;
@@ -94,15 +91,15 @@ public class Equilibrio {
              * L'ULTIMO VALORE DELLA RIGA E' UGUALE ALLA DIFFERENZA TRA 0 E LA SOMMA DI TUTTI I VALORI PRECEDENTI SULLA RIGA
              * IL VALORE VIENE SALVATO ANCHE SUL SIMMETRICO
              */
-            if(j == N - 1) {
-                matrix[i][j] = calcolaSomma(matrix[i], N);
+            if(j == Battaglia.N - 1) {
+                matrix[i][j] = calcolaSomma(matrix[i], Battaglia.N);
                 matrix[j][i] = - matrix[i][j];
                 /*
                  * CONTROLLO SULLA VALIDITA' DELL'ULTIMO VALORE
                  * IL VALORE DEVE ESSERE COOMPRESO TRA IL MAX_DANNO E MIN_DANNO E DEVE ESSERE DIVERSO DA 0
                  * SE NON RISPETTA QUESTI ALLORA SI RIGENERA LA RIGA
                  */
-                if(matrix[i][j] > MAX_DANNO || matrix[i][j] < -MAX_DANNO || matrix[i][j] == 0)
+                if(matrix[i][j] > Battaglia.MAX_DANNO || matrix[i][j] < -Battaglia.MAX_DANNO || matrix[i][j] == 0)
                     i--;
             }
 
@@ -144,7 +141,7 @@ public class Equilibrio {
     public void stampaEquilibrio () {
         //STAMPA DELLA PRIMA RIGA CON GLI ELEMENTI
         System.out.print("\t\t-->\t");
-        for(int i = 0; i < N; i++)
+        for(int i = 0; i < Battaglia.N; i++)
             System.out.print(Elementi.getElemento(i) + "\t");
         //RIGA DI A CAPO PER FORMATTAZIONE
         System.out.println();
@@ -153,9 +150,9 @@ public class Equilibrio {
          * STAMPA DELLA MATRICE
          * I VALORI NEGATIVI VENGONO STAMPATI COME 0
          */
-        for(int i = 0; i < N; i++) {
+        for(int i = 0; i < Battaglia.N; i++) {
             System.out.print(Elementi.getElemento(i) + "\t\t");
-            for(int j = 0; j < N; j++) {
+            for(int j = 0; j < Battaglia.N; j++) {
                 if(matrix[i][j] <= 0)
                    System.out.print("0" + "\t\t");
                 else

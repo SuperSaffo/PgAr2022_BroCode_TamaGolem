@@ -1,4 +1,4 @@
-package it.unibs.fp.tamagolem;
+package it.unibs.fp.tamaGolem;
 
 /**
  * Classe enum degli elementi

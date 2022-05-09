@@ -1,6 +1,6 @@
 package it.unibs.fp.librerie;
 
-import it.unibs.fp.mylib2.InputDati;
+
 
 import java.util.Random;
 

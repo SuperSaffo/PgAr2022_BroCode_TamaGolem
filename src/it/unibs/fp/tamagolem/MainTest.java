@@ -1,4 +1,4 @@
-package it.unibs.fp.tamagolem;
+package it.unibs.fp.tamaGolem;
 
 public class MainTest {
     public static void main(String[] args) {

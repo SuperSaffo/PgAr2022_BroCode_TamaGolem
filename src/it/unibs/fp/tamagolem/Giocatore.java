@@ -1,6 +1,4 @@
-package it.unibs.fp.tamagolem;
-
-import static it.unibs.fp.tamagolem.Battaglia.G;
+package it.unibs.fp.tamaGolem;
 
 /**
  * Classe giocatore
@@ -9,7 +7,7 @@ import static it.unibs.fp.tamagolem.Battaglia.G;
 public class Giocatore {
 
     private TamaGolem golem;
-    private int numeroGolem = G;
+    private int numeroGolem = Battaglia.G;
 
     /**
      * Costruttore vuoto del giocatore

@@ -1,11 +1,10 @@
-package it.unibs.fp.tamagolem;
+package it.unibs.fp.tamaGolem;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static it.unibs.fp.tamagolem.Battaglia.P;
-import static it.unibs.fp.tamagolem.Battaglia.V;
+import static it.unibs.fp.tamaGolem.Battaglia.V;
 
 /**
  * Classe Golem

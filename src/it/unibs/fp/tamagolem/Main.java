@@ -1,9 +1,7 @@
-package it.unibs.fp.tamagolem;
+package it.unibs.fp.tamaGolem;
 
-import it.unibs.fp.mylib.EstrazioniCasuali;
+
 import it.unibs.fp.librerie.InputDati;
-
-import java.util.Random;
 
 /**
  * Classe main
