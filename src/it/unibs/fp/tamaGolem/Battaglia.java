@@ -221,6 +221,7 @@ public class Battaglia {
      * <p>Ogni giocatore possiede un Golem che attacca con una pietra di quelle possedute</p>
      * <p>Vengono stampati a video i 2 elementi che si scontrano</p>
      * <p>Finito il scontro con la prima pietra di ciascuno si incrementa il turno e la pietra da utilizzare</p>
+     * <p>Se avvengono P pareggi consecutivi vengono mescolati gli ordini delle pietre dei </p>
      * <p>Al termine lo sconfitto genera un nuovo Golem per il turno successivo</p>
      *
      * @see Battaglia#confrontoGolem(Elementi, Elementi)
@@ -244,11 +245,13 @@ public class Battaglia {
             Elementi e2 = giocatore2.getGolem().getPietra(posPietra2);
             System.out.println("\t- (1) " + e1 + " > contro < " + e2 + " (2)");
 
+            //CONTEGGIO DEI PAREGGI, SE IN UN TURNO UN GOLEM SUBISCE DANNO SI RESETTA
             if(confrontoGolem(e1, e2))
                 npareggi = 0;
             else
                 npareggi++;
 
+            //SE AVVENGONO P PAREGGI SI MESCOLA L'ORDINE DELLE PIETRE
             if(npareggi >= P) {
                 giocatore1.getGolem().mischiaPietre();
                 giocatore2.getGolem().mischiaPietre();
