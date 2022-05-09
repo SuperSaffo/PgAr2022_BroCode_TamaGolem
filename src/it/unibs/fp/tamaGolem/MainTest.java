@@ -5,5 +5,10 @@ public class MainTest {
         Equilibrio e = new Equilibrio();
         e.generaEquilibrioControllo();
         e.stampaEquilibrio();
+
+        Battaglia b = new Battaglia();
+        b.creaArrayPietre();
+
+        b.stampaInfoPartita();
     }
 }

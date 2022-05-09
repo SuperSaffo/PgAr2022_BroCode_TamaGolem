@@ -1,7 +1,7 @@
 package it.unibs.fp.librerie;
 
 public class MyMenu {
-    final private static String CORNICE = "--------------------------------------------------";
+    final private static String CORNICE = "-------------------------------------------------";
     final private static String VOCE_USCITA = "0\tEsci";
     final private static String RICHIESTA_INSERIMENTO = "Scegli pietra > ";
 

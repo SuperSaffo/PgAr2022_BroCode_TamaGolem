@@ -26,11 +26,11 @@ public class Battaglia {
     /**
      * Vita di ogni Golem
      */
-    public static final int V = 100;
+    public static final int V = 10;
     /**
-     * Danno massimo provocabile da un Golem a un altro Golem
+     * Danno massimo provocabile da un Golem a un altro Golem, equivale al massimo della vita del Golem
      */
-    public static final int MAX_DANNO = 100;
+    public static final int MAX_DANNO = V;
 
     /**
      * Equilibrio del sistema
@@ -97,15 +97,17 @@ public class Battaglia {
      */
     public void setBattaglia() {
         this.equilibrio = new Equilibrio();
+        System.out.println("Nuovo equilibrio del mondo generato");
+        System.out.println("\t\t\tINIZIO DELLA PARTITA");
         equilibrio.generaEquilibrioControllo();
-        System.out.println("**************************************************");
-        System.out.println("|\t\tGIOCATORE 1 (ancora " + (G-1) + " Golem):\t\t\t |");
-        System.out.println("**************************************************");
+        System.out.println("*************************************************");
+        System.out.println("|\t\t\tGIOCATORE 1 (" + G + " Golem):\t\t\t\t|");
+        System.out.println("*************************************************");
         this.giocatore1 = creaGiocatore();
-        System.out.println("--------------------------------------------------\n\n");
-        System.out.println("**************************************************");
-        System.out.println("|\t\tGIOCATORE 2 (ancora " + (G-1) + " Golem):\t\t\t |");
-        System.out.println("**************************************************");
+        System.out.println("-------------------------------------------------\n\n");
+        System.out.println("*************************************************");
+        System.out.println("|\t\t\tGIOCATORE 2 (" + G + " Golem):\t\t\t |");
+        System.out.println("*************************************************");
 
         this.giocatore2 = creaGiocatore();
     }
@@ -233,13 +235,13 @@ public class Battaglia {
         int turno = 0;
         int npareggi = 0;
 
-        System.out.println("\n\n**************************************************");
+        System.out.println("\n\n*************************************************");
         System.out.println("| \t\t\tINIZIO DELLO SCONTRO\t\t\t\t|");
-        System.out.println("**************************************************\n\n");
+        System.out.println("*************************************************\n\n");
 
         while(!giocatore1.getGolem().isMorto() && !giocatore2.getGolem().isMorto()){
 
-            System.out.println("--------------------------------------------------");
+            System.out.println("-------------------------------------------------");
             System.out.println("Turno " + (turno + 1) + ":\t");
             Elementi e1 = giocatore1.getGolem().getPietra(posPietra1);
             Elementi e2 = giocatore2.getGolem().getPietra(posPietra2);
@@ -257,6 +259,7 @@ public class Battaglia {
                 giocatore2.getGolem().mischiaPietre();
             }
 
+            //AUMENTA TURNO, INCREMENTA LA PIETRA DA USARE NEL COMBATTIMENTO SUCCESSIVO
             turno++;
             setPosPietra1();
             setPosPietra2();
@@ -298,6 +301,7 @@ public class Battaglia {
         if(danno > 0) {
             System.out.println("\t- " + e1 + " > vince contro > " + e2);
             giocatore2.getGolem().dannoInflitto(Math.abs(danno));
+
             if(giocatore2.getGolem().isMorto())
                 System.out.println("\t- Il Golem 2 e' morto");
             else
@@ -306,6 +310,7 @@ public class Battaglia {
         else if (danno < 0) {
             System.out.println("\t- " + e2 + " > vince contro > " + e1);
             giocatore1.getGolem().dannoInflitto(Math.abs(danno));
+
             if(giocatore1.getGolem().isMorto())
                 System.out.println("\t- Il Golem 1 e' morto");
             else
@@ -330,25 +335,57 @@ public class Battaglia {
      * @see Battaglia#posPietra2
      */
     public void nuovoGolemPerSconfitto(){
-        System.out.println("--------------------------------------------------\n");
+        System.out.println("-------------------------------------------------\n");
 
         if(!giocatore1.isSconfitto() && giocatore1.getGolem().isMorto()) {
-            System.out.println("**************************************************");
-            System.out.println("|\t\tGIOCATORE 1 (ancora " + (giocatore1.getNumeroGolem() - 1) + " Golem):\t\t\t |");
-            System.out.println("**************************************************");
+            System.out.println("*************************************************");
+            System.out.println("|\t\tGIOCATORE 1 (" + giocatore1.getNumeroGolem() + " Golem):\t\t\t |");
+            System.out.println("*************************************************");
+
             Elementi[] pietreScelte = scegliPietre();
             giocatore1.generaGolem(pietreScelte);
             this.posPietra1 = 0;
         }
         else if(!giocatore2.isSconfitto() && giocatore2.getGolem().isMorto()){
-            System.out.println("**************************************************");
-            System.out.println("|\t\tGIOCATORE 2 (ancora " + (giocatore2.getNumeroGolem() - 1) + " Golem):\t\t\t |");
-            System.out.println("**************************************************");
+            System.out.println("*************************************************");
+            System.out.println("|\t\tGIOCATORE 2 (" + giocatore2.getNumeroGolem()  + " Golem):\t\t\t |");
+            System.out.println("*************************************************");
+
             Elementi[] pietreScelte = scegliPietre();
             giocatore2.generaGolem(pietreScelte);
             this.posPietra2 = 0;
         }
         System.out.println("\n");
+    }
+
+
+    /**
+     * Metodo per stampare le regole del gioco all'inizio di ogni partita
+     * <p>Il gioco dipende completamente da numero di elementi del mondo</p>
+     *
+     * @see Elementi
+     * @see Battaglia#N
+     * @see Battaglia#G
+     * @see Battaglia#P
+     * @see Battaglia#S
+     */
+    public void stampaInfoPartita() {
+        System.out.println("-------------------------------------------------");
+        System.out.println("\t\tREGOLE DEL GIOCO");
+        System.out.print("+ Totale elementi: " + N);
+
+        for(int i = 0; i < Elementi.values().length; i++) {
+            if(i % 3 == 0)
+                System.out.println();
+            System.out.print("\t" + Elementi.getElemento(i));
+        }
+
+        System.out.println("\n+ Totale pietre comuni: " + S);
+        System.out.println("+ Ogni giocatore ha " + G + " Golem");
+        System.out.println("+ Per ogni Golem il giocatore sceglie " + P + " pietre");
+        System.out.println("\nGLHF");
+        System.out.println("-------------------------------------------------");
+
     }
 
     /**
