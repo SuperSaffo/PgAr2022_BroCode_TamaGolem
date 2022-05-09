@@ -23,6 +23,10 @@ public class Giocatore {
         return golem;
     }
 
+    public int getNumeroGolem() {
+        return numeroGolem;
+    }
+
     /**
      * Medoto che toglie un golem al giocatore
      */

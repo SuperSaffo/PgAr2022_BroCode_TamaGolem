@@ -3,7 +3,7 @@ package it.unibs.fp.librerie;
 public class MyMenu {
     final private static String CORNICE = "--------------------------------------------------";
     final private static String VOCE_USCITA = "0\tEsci";
-    final private static String RICHIESTA_INSERIMENTO = "Digita il numero dell'opzione desiderata > ";
+    final private static String RICHIESTA_INSERIMENTO = "Scegli pietra > ";
 
     private String titolo;
     private String [] voci;

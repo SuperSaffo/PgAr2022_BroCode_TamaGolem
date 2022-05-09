@@ -98,11 +98,15 @@ public class Battaglia {
     public void setBattaglia() {
         this.equilibrio = new Equilibrio();
         equilibrio.generaEquilibrioControllo();
-        System.out.println("--------------------------------------------------");
-        System.out.println("|\tGIOCATORE 1:\t|");
+        System.out.println("**************************************************");
+        System.out.println("|\t\tGIOCATORE 1 (ancora " + (G-1) + " Golem):\t\t\t |");
+        System.out.println("**************************************************");
         this.giocatore1 = creaGiocatore();
-        System.out.println("--------------------------------------------------");
-        System.out.println("|\tGIOCATORE 2:\t|");
+        System.out.println("--------------------------------------------------\n\n");
+        System.out.println("**************************************************");
+        System.out.println("|\t\tGIOCATORE 2 (ancora " + (G-1) + " Golem):\t\t\t |");
+        System.out.println("**************************************************");
+
         this.giocatore2 = creaGiocatore();
     }
 
@@ -151,6 +155,7 @@ public class Battaglia {
      */
     public Elementi[] scegliPietre() {
         Elementi[] pietreGolem = new Elementi[P];
+        System.out.println("Scegli " + P + " pietre per il Golem");
         for(int i = 0; i < P; i++) {
             String pietraScelta = menuPietre();
             pietreGolem[i] = Elementi.valueOf(pietraScelta);
@@ -226,6 +231,11 @@ public class Battaglia {
     public void turnoConPerdente() {
         int turno = 0;
         int npareggi = 0;
+
+        System.out.println("\n\n**************************************************");
+        System.out.println("| \t\t\tINIZIO DELLO SCONTRO\t\t\t\t|");
+        System.out.println("**************************************************\n\n");
+
         while(!giocatore1.getGolem().isMorto() && !giocatore2.getGolem().isMorto()){
 
             System.out.println("--------------------------------------------------");
@@ -268,14 +278,17 @@ public class Battaglia {
     }
 
     /**
-     * Metodo per confrontare i 2 Golem, in base al danno viene scelto chi riceve danno
+     * Metodo per confrontare i 2 Golem, in base a chi vince il confronto viene scelto chi riceve danno
      * <p>Se il danno e' positivo allora vince 1 e perde 2</p>
      * <p>Se il danno e' negativo allora vince 2 e perde 1</p>
      * <p>Se gli elementi coincidono e' un pareggio</p>
+     * <p>Se avviene un pareggio si ritorna falso, altrimenti si ritorna vero</p>
      * <p>Se il golem perdente muore non viene stampato il danno ricevuto dal colpo fatale</p>
      *
+     * @see Equilibrio
      * @param e1 Elemento della pietra del Golem 1
      * @param e2 Elemento della pietra del Golem 2
+     * @return Ritorna falso se pareggiano, altrimenti vero
      */
     public boolean confrontoGolem(Elementi e1, Elementi e2) {
         int danno = equilibrio.getValoreMatrix(Elementi.getPosElemento(e1), Elementi.getPosElemento(e2));
@@ -314,16 +327,25 @@ public class Battaglia {
      * @see Battaglia#posPietra2
      */
     public void nuovoGolemPerSconfitto(){
+        System.out.println("--------------------------------------------------\n");
+
         if(!giocatore1.isSconfitto() && giocatore1.getGolem().isMorto()) {
+            System.out.println("**************************************************");
+            System.out.println("|\t\tGIOCATORE 1 (ancora " + (giocatore1.getNumeroGolem() - 1) + " Golem):\t\t\t |");
+            System.out.println("**************************************************");
             Elementi[] pietreScelte = scegliPietre();
             giocatore1.generaGolem(pietreScelte);
             this.posPietra1 = 0;
         }
         else if(!giocatore2.isSconfitto() && giocatore2.getGolem().isMorto()){
+            System.out.println("**************************************************");
+            System.out.println("|\t\tGIOCATORE 2 (ancora " + (giocatore2.getNumeroGolem() - 1) + " Golem):\t\t\t |");
+            System.out.println("**************************************************");
             Elementi[] pietreScelte = scegliPietre();
             giocatore2.generaGolem(pietreScelte);
             this.posPietra2 = 0;
         }
+        System.out.println("\n");
     }
 
     /**

@@ -47,6 +47,9 @@ public class TamaGolem {
         return this.hp <= 0;
     }
 
+    /**
+     * Metodo per mischiare l'Array di pietre
+     */
     public void mischiaPietre() {
         List<Elementi> mischiaPietre = Arrays.asList(pietre);
 
