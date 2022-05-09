@@ -1,5 +1,9 @@
 package it.unibs.fp.tamagolem;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 import static it.unibs.fp.tamagolem.Battaglia.P;
 import static it.unibs.fp.tamagolem.Battaglia.V;
 
@@ -42,6 +46,14 @@ public class TamaGolem {
      */
     public boolean isMorto() {
         return this.hp <= 0;
+    }
+
+    public void mischiaPietre() {
+        List<Elementi> mischiaPietre = Arrays.asList(pietre);
+
+        Collections.shuffle(mischiaPietre);
+
+        mischiaPietre.toArray(pietre);
     }
 
 

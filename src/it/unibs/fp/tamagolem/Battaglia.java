@@ -225,7 +225,7 @@ public class Battaglia {
      */
     public void turnoConPerdente() {
         int turno = 0;
-
+        int npareggi = 0;
         while(!giocatore1.getGolem().isMorto() && !giocatore2.getGolem().isMorto()){
 
             System.out.println("--------------------------------------------------");
@@ -233,7 +233,16 @@ public class Battaglia {
             Elementi e1 = giocatore1.getGolem().getPietra(posPietra1);
             Elementi e2 = giocatore2.getGolem().getPietra(posPietra2);
             System.out.println("\t- (1) " + e1 + " > contro < " + e2 + " (2)");
-            confrontoGolem(e1, e2);
+
+            if(confrontoGolem(e1, e2))
+                npareggi = 0;
+            else
+                npareggi++;
+
+            if(npareggi >= P) {
+                giocatore1.getGolem().mischiaPietre();
+                giocatore2.getGolem().mischiaPietre();
+            }
 
             turno++;
             setPosPietra1();
@@ -268,7 +277,7 @@ public class Battaglia {
      * @param e1 Elemento della pietra del Golem 1
      * @param e2 Elemento della pietra del Golem 2
      */
-    public void confrontoGolem(Elementi e1, Elementi e2) {
+    public boolean confrontoGolem(Elementi e1, Elementi e2) {
         int danno = equilibrio.getValoreMatrix(Elementi.getPosElemento(e1), Elementi.getPosElemento(e2));
         if(danno > 0) {
             System.out.println("\t- " + e1 + " > vince contro > " + e2);
@@ -277,7 +286,6 @@ public class Battaglia {
                 System.out.println("\t- Il Golem 2 e' morto");
             else
                 System.out.println("\t- Il Golem 2 ha subito un danno di: " + Math.abs(danno));
-
         }
         else if (danno < 0) {
             System.out.println("\t- " + e2 + " > vince contro > " + e1);
@@ -287,8 +295,11 @@ public class Battaglia {
             else
                 System.out.println("\t- Il Golem 1 ha subito un danno di: " + Math.abs(danno));
         }
-        else
+        else {
             System.out.println("\t- Nessun danno subito");
+            return false;
+        }
+        return true;
     }
 
     /**
