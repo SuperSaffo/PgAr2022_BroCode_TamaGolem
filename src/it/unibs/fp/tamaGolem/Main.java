@@ -4,10 +4,8 @@ package it.unibs.fp.tamaGolem;
 import it.unibs.fp.librerie.InputDati;
 
 /**
- * Classe main
- * <p>Svolgimento della partita</p>
+ * Classe main per svolgimento della partita e richiesta se iniziarne una nuova al termine
  */
-
 public class Main {
     public static void main(String[] args) {
         //SCELTA SE RICOMINCIARE UNA NUOVA PARTITA

@@ -24,7 +24,7 @@ public class Equilibrio {
      * @return Ritorna l'elemento iesimo alla colonna jesima
      */
     public int getValoreMatrix(int r, int c) {
-        return matrix[r][c];
+        return this.matrix[r][c];
     }
 
     /**
@@ -153,10 +153,10 @@ public class Equilibrio {
         for(int i = 0; i < Battaglia.N; i++) {
             System.out.print(Elementi.getElemento(i) + "\t\t");
             for(int j = 0; j < Battaglia.N; j++) {
-                if(matrix[i][j] <= 0)
+                if(this.matrix[i][j] <= 0)
                    System.out.print("0" + "\t\t");
                 else
-                    System.out.print(matrix[i][j] + "\t\t");
+                    System.out.print(this.matrix[i][j] + "\t\t");
             }
             System.out.println();
         }

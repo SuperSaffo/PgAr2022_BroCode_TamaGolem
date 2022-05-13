@@ -28,7 +28,7 @@ public class TamaGolem {
      * @return ritorna la pietra alla posizione iesima
      */
     public Elementi getPietra(int i) {
-        return pietre[i];
+        return this.pietre[i];
     }
 
     /**
@@ -51,11 +51,11 @@ public class TamaGolem {
      * Metodo per mischiare l'Array di pietre
      */
     public void mischiaPietre() {
-        List<Elementi> mischiaPietre = Arrays.asList(pietre);
+        List<Elementi> mischiaPietre = Arrays.asList(this.pietre);
 
         Collections.shuffle(mischiaPietre);
 
-        mischiaPietre.toArray(pietre);
+        mischiaPietre.toArray(this.pietre);
     }
 
 

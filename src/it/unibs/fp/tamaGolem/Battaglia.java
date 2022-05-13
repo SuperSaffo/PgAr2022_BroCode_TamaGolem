@@ -31,6 +31,8 @@ public class Battaglia {
      * Danno massimo provocabile da un Golem a un altro Golem, equivale al massimo della vita del Golem
      */
     public static final int MAX_DANNO = V;
+    public static final String CORNICE_ASTERISCHI = "*************************************************";
+    public static final String CORNICE_LINEA = "-------------------------------------------------";
 
     /**
      * Equilibrio del sistema
@@ -100,14 +102,13 @@ public class Battaglia {
         System.out.println("Nuovo equilibrio del mondo generato");
         System.out.println("\t\t\tINIZIO DELLA PARTITA\n");
         equilibrio.generaEquilibrioControllo();
-        System.out.println("*************************************************");
-        System.out.println("|\t\t\tGIOCATORE 1 (" + G + " Golem):\t\t\t\t|");
-        System.out.println("*************************************************");
+        System.out.println(CORNICE_ASTERISCHI);
+        System.out.println("*\t\t\tGIOCATORE 1 (" + G + " Golem):\t\t\t\t*");
+        System.out.println(CORNICE_ASTERISCHI);
         this.giocatore1 = creaGiocatore();
-        System.out.println("-------------------------------------------------\n\n");
-        System.out.println("*************************************************");
-        System.out.println("|\t\t\tGIOCATORE 2 (" + G + " Golem):\t\t\t\t|");
-        System.out.println("*************************************************");
+        System.out.println(CORNICE_ASTERISCHI);
+        System.out.println("*\t\t\tGIOCATORE 2 (" + G + " Golem):\t\t\t\t*");
+        System.out.println(CORNICE_ASTERISCHI);
 
         this.giocatore2 = creaGiocatore();
     }
@@ -151,6 +152,7 @@ public class Battaglia {
     /**
      * Metodo per scegliere le P pietre per ogni TamaGolem
      * <p>Le pietre vengono scelte tra quelle disponibili tra quelle comuni</p>
+     * <p>Al termine delle scelte vengono stampate le P pietre scelte per il Golem</p>
      *
      * @see Battaglia#menuPietre()
      * @return Ritorna Array di Nodi con le P pietre scelte
@@ -163,13 +165,17 @@ public class Battaglia {
             pietreGolem[i] = Elementi.valueOf(pietraScelta);
             this.pietreComuni.remove(Elementi.valueOf(pietraScelta));
         }
+        System.out.print("\nPietre del Golem: ");
+        for(int i = 0; i < P; i++)
+            System.out.print(pietreGolem[i] + "\t");
+        System.out.println("\n" + CORNICE_LINEA + "\n");
 
         return pietreGolem;
     }
 
     /**
      * Metodo con menu per scegliere la pietra da dare al proprio golem
-     * <p>Ripete la scelta se quella inserita non e' accettabile<p/>
+     * <p>Ripete la scelta se quella inserita non e' accettabile
      * @see Battaglia#listaPietreConteggio()
      * @see MyMenu#stampaMenuNoZero()
      * @see MyMenu#scegliNoZero()
@@ -177,7 +183,7 @@ public class Battaglia {
      */
     public String menuPietre() {
         String[] pietre = listaPietreConteggio();
-        MyMenu menuPietre = new MyMenu("Pietre comuni disponibili (" + pietreComuni.size() + "): ", pietre);
+        MyMenu menuPietre = new MyMenu("Pietre comuni disponibili (" + this.pietreComuni.size() + "): ", pietre);
         int scelta;
         do {
             scelta = menuPietre.scegliNoZero();
@@ -188,7 +194,7 @@ public class Battaglia {
 
     /**
      * Metodo per ritornare la lista di pietre con il numero rimanenti per ciascuna
-     * <p>Se si utilizzano tutte le pietre di un tipo, questa viene sostituita con una "X"</p>
+     * <p>Se si utilizzano tutte le pietre di un tipo, il numero di rimanenti viene sostituita con una "X"</p>
      *
      * @see Collections
      * @see Elementi#getElemento(int) 
@@ -197,26 +203,13 @@ public class Battaglia {
     public String[] listaPietreConteggio() {
         ArrayList<String> pietreScelta = new ArrayList<>();
         for(int i = 0; i < N; i++) {
-            if(Collections.frequency(pietreComuni, Elementi.getElemento(i)) > 0)
-                pietreScelta.add(Elementi.getElemento(i).toString() + "\t("+ Collections.frequency(pietreComuni, Elementi.getElemento(i)) + ")");
+            if(Collections.frequency(this.pietreComuni, Elementi.getElemento(i)) > 0)
+                pietreScelta.add(Elementi.getElemento(i).toString() + "\t("+ Collections.frequency(this.pietreComuni, Elementi.getElemento(i)) + ")");
             else
                 pietreScelta.add(Elementi.getElemento(i).toString() + "\t(X)");
         }
         return pietreScelta.toArray(new String[0]);
     }
-
-    /*
-        /**
-         * Metodo per visualizzare le pietre ancora disponibili
-         * @see Battaglia#listaPietreConteggio()
-         */
-        /*
-    public void stampaListaConteggio() {
-        String[] lista = listaPietreConteggio();
-        for(String s : lista)
-            System.out.println(s);
-    }
-    */
 
     /**
      * Metodo per giocare il turno tra giocatore 1 e giocatore 2
@@ -224,7 +217,7 @@ public class Battaglia {
      * <p>Vengono stampati a video i 2 elementi che si scontrano</p>
      * <p>Finito il scontro con la prima pietra di ciascuno si incrementa il turno e la pietra da utilizzare</p>
      * <p>Se avvengono P pareggi consecutivi vengono mescolati gli ordini delle pietre dei </p>
-     * <p>Al termine lo sconfitto genera un nuovo Golem per il turno successivo</p>
+     * <p>Al termine c'e' un messaggio che indica il Golem sconfitto e il giocatore sconfitto genera un nuovo Golem per il turno successivo</p>
      *
      * @see Battaglia#confrontoGolem(Elementi, Elementi)
      * @see Battaglia#setPosPietra1()
@@ -235,16 +228,16 @@ public class Battaglia {
         int turno = 0;
         int npareggi = 0;
 
-        System.out.println("\n*************************************************");
-        System.out.println("| \t\t\tINIZIO DELLO SCONTRO\t\t\t\t|");
-        System.out.println("*************************************************\n");
+        System.out.println("\n" + CORNICE_ASTERISCHI);
+        System.out.println("*\t\t\tINIZIO DELLO SCONTRO\t\t\t\t*");
+        System.out.println(CORNICE_ASTERISCHI + "\n");
 
-        while(!giocatore1.getGolem().isMorto() && !giocatore2.getGolem().isMorto()){
+        while(!this.giocatore1.getGolem().isMorto() && !this.giocatore2.getGolem().isMorto()){
 
-            System.out.println("-------------------------------------------------");
+            System.out.println(CORNICE_LINEA);
             System.out.println("Turno " + (turno + 1) + ":\t");
-            Elementi e1 = giocatore1.getGolem().getPietra(posPietra1);
-            Elementi e2 = giocatore2.getGolem().getPietra(posPietra2);
+            Elementi e1 = this.giocatore1.getGolem().getPietra(this.posPietra1);
+            Elementi e2 = this.giocatore2.getGolem().getPietra(this.posPietra2);
             System.out.println("\t- (1) " + e1 + " > contro < " + e2 + " (2)");
 
             //CONTEGGIO DEI PAREGGI, SE IN UN TURNO UN GOLEM SUBISCE DANNO SI RESETTA
@@ -255,8 +248,8 @@ public class Battaglia {
 
             //SE AVVENGONO P PAREGGI SI MESCOLA L'ORDINE DELLE PIETRE
             if(npareggi >= P) {
-                giocatore1.getGolem().mischiaPietre();
-                giocatore2.getGolem().mischiaPietre();
+                this.giocatore1.getGolem().mischiaPietre();
+                this.giocatore2.getGolem().mischiaPietre();
             }
 
             //AUMENTA TURNO, INCREMENTA LA PIETRA DA USARE NEL COMBATTIMENTO SUCCESSIVO
@@ -265,9 +258,9 @@ public class Battaglia {
             setPosPietra2();
         }
 
-        System.out.println("-------------------------------------------------");
+        System.out.println(CORNICE_LINEA);
         System.out.println("SCONTRO TERMINATO");
-        if(giocatore1.getGolem().isMorto())
+        if(this.giocatore1.getGolem().isMorto())
             System.out.println("Il Golem di giocatore 1 ha perso lo scontro");
         else
             System.out.println("Il Golem di giocatore 2 ha perso lo scontro");
@@ -304,21 +297,21 @@ public class Battaglia {
      * @return Ritorna falso se pareggiano, altrimenti vero
      */
     public boolean confrontoGolem(Elementi e1, Elementi e2) {
-        int danno = equilibrio.getValoreMatrix(Elementi.getPosElemento(e1), Elementi.getPosElemento(e2));
+        int danno = this.equilibrio.getValoreMatrix(Elementi.getPosElemento(e1), Elementi.getPosElemento(e2));
         if(danno > 0) {
             System.out.println("\t- " + e1 + " > vince contro > " + e2);
-            giocatore2.getGolem().dannoInflitto(Math.abs(danno));
+            this.giocatore2.getGolem().dannoInflitto(Math.abs(danno));
 
-            if(giocatore2.getGolem().isMorto())
+            if(this.giocatore2.getGolem().isMorto())
                 System.out.println("\t- Il Golem 2 e' morto");
             else
                 System.out.println("\t- Il Golem 2 ha subito un danno di: " + Math.abs(danno));
         }
         else if (danno < 0) {
             System.out.println("\t- " + e2 + " > vince contro > " + e1);
-            giocatore1.getGolem().dannoInflitto(Math.abs(danno));
+            this.giocatore1.getGolem().dannoInflitto(Math.abs(danno));
 
-            if(giocatore1.getGolem().isMorto())
+            if(this.giocatore1.getGolem().isMorto())
                 System.out.println("\t- Il Golem 1 e' morto");
             else
                 System.out.println("\t- Il Golem 1 ha subito un danno di: " + Math.abs(danno));
@@ -342,24 +335,24 @@ public class Battaglia {
      * @see Battaglia#posPietra2
      */
     public void nuovoGolemPerSconfitto(){
-        System.out.println("-------------------------------------------------\n");
+        System.out.println(CORNICE_LINEA + "\n");
 
-        if(!giocatore1.isSconfitto() && giocatore1.getGolem().isMorto()) {
-            System.out.println("*************************************************");
-            System.out.println("|\t\t\tGIOCATORE 1 (" + giocatore1.getNumeroGolem() + " Golem):\t\t\t\t|");
-            System.out.println("*************************************************");
+        if(!this.giocatore1.isSconfitto() && this.giocatore1.getGolem().isMorto()) {
+            System.out.println(CORNICE_ASTERISCHI);
+            System.out.println("*\t\t\tGIOCATORE 1 (" + this.giocatore1.getNumeroGolem() + " Golem):\t\t\t\t*");
+            System.out.println(CORNICE_ASTERISCHI);
 
             Elementi[] pietreScelte = scegliPietre();
             giocatore1.generaGolem(pietreScelte);
             this.posPietra1 = 0;
         }
-        else if(!giocatore2.isSconfitto() && giocatore2.getGolem().isMorto()){
-            System.out.println("*************************************************");
-            System.out.println("|\t\t\tGIOCATORE 2 (" + giocatore2.getNumeroGolem()  + " Golem):\t\t\t\t|");
-            System.out.println("*************************************************");
+        else if(!this.giocatore2.isSconfitto() && this.giocatore2.getGolem().isMorto()){
+            System.out.println(CORNICE_ASTERISCHI);
+            System.out.println("*\t\t\tGIOCATORE 2 (" + this.giocatore2.getNumeroGolem()  + " Golem):\t\t\t\t*");
+            System.out.println(CORNICE_ASTERISCHI);
 
             Elementi[] pietreScelte = scegliPietre();
-            giocatore2.generaGolem(pietreScelte);
+            this.giocatore2.generaGolem(pietreScelte);
             this.posPietra2 = 0;
         }
         System.out.println("\n");
@@ -377,8 +370,8 @@ public class Battaglia {
      * @see Battaglia#S
      */
     public void stampaInfoPartita() {
-        System.out.println("-------------------------------------------------");
-        System.out.println("\t\tREGOLE DEL GIOCO");
+        System.out.println(CORNICE_LINEA);
+        System.out.println("\t\t\tREGOLE DEL GIOCO");
         System.out.print("+ Totale elementi: " + N);
 
         for(int i = 0; i < Elementi.values().length; i++) {
@@ -389,9 +382,10 @@ public class Battaglia {
 
         System.out.println("\n+ Totale pietre comuni: " + S);
         System.out.println("+ Ogni giocatore ha " + G + " Golem");
+        System.out.println("+ Ogni Golem ha " + V + " HP");
         System.out.println("+ Per ogni Golem il giocatore sceglie " + P + " pietre");
-        System.out.println("\nGLHF");
-        System.out.println("-------------------------------------------------");
+        System.out.println("\n\tGLHF");
+        System.out.println(CORNICE_LINEA);
 
     }
 
@@ -401,7 +395,7 @@ public class Battaglia {
      */
     public void stampaEquilibrioBattaglia() {
         System.out.println("EQUILIBRIO DELLA PARTITA: ");
-        equilibrio.stampaEquilibrio();
+        this.equilibrio.stampaEquilibrio();
     }
 
 
