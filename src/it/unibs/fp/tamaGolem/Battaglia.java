@@ -123,8 +123,8 @@ public class Battaglia {
      */
     public ArrayList<Elementi> creaArrayPietre() {
         ArrayList<Elementi> pietreComuni = new ArrayList<>();
-        for(int i = 0; i < S / P; i++) {
-            for(int j = 0; j < P; j++) {
+        for(int i = 0; i < N; i++) {
+            for(int j = 0; j < S / N; j++) {
                 pietreComuni.add(Elementi.getElemento(i));
             }
         }
