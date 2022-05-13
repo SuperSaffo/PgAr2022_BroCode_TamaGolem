@@ -50,7 +50,7 @@ public class Giocatore {
      * @return ritorna true se il giocatore non ha più golem a disposizione
      */
     public boolean isSconfitto(){
-        if (numeroGolem == 0){
+        if (numeroGolem == 0 && golem.isMorto()){
             return true;
         }else
             return false;
