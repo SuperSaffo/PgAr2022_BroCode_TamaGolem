@@ -44,17 +44,13 @@ public class Giocatore {
         this.golem = new TamaGolem(pietreScelte);
     }
 
-
     /**
      * Metodo che controlla che un giocatore è sconfitto
      * <p>Il giocatore si considera sconfitto se non possiede piu' golem e l'ultimo e' morto</p>
      * @return ritorna true se il giocatore non ha più golem a disposizione
      */
     public boolean isSconfitto(){
-        if (this.numeroGolem == 0 && this.golem.isMorto()){
-            return true;
-        }else
-            return false;
+        return this.numeroGolem == 0 && this.golem.isMorto();
     }
 
 }

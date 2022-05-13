@@ -35,10 +35,7 @@ public class Main {
      * @return ritorna true se desidera continuare, false se vuole smettere di giocare
      */
     public static boolean nuovaPartita (){
-        if (InputDati.yesOrNo("Nuova partita?")){
-           return  true;
-        }
-        return  false;
+        return InputDati.yesOrNo("Nuova partita?");
     }
 }
 
