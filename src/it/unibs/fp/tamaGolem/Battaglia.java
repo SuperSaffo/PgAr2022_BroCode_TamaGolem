@@ -5,7 +5,9 @@ import it.unibs.fp.librerie.MyMenu;
 import java.util.ArrayList;
 import java.util.Collections;
 
-
+/**
+ * Classe per l'intera gestione della battaglia
+ */
 public class Battaglia {
     /**
      * Numero di elementi
@@ -39,6 +41,9 @@ public class Battaglia {
      * @see Equilibrio
      */
     private Equilibrio equilibrio;
+    /**
+     * Pietre in comune da usare nella battaglia
+     */
     private ArrayList<Elementi> pietreComuni;
     /**
      * Giocatore 1
@@ -62,13 +67,10 @@ public class Battaglia {
     private int posPietra2 = 0;
 
     /**
-     * Costrutture della classe battaglia
-     * <p>Viene creato l'ArrayList contenente le S pietre, ci sono P pietre per ognuno degli N elementi</p>
+     * Costrutture vuoto della classe battaglia
      *
-     * @see Elementi
      */
     public Battaglia() {
-        this.pietreComuni = creaArrayPietre();
     }
 
     /**
@@ -91,13 +93,17 @@ public class Battaglia {
 
     /**
      * Metodo per iniziare la battaglia
+     * <p>Viene creato l'ArrayList contenente le S pietre, ci sono S/N pietre per ognuno degli N elementi</p>
      * <p>Viene generato il nuovo equilibrio</p>
      * <p>Vengono generati i 2 giocatori</p>
      *
+     * @see Elementi
+     * @see Battaglia#creaArrayPietre()
      * @see Equilibrio#generaEquilibrioControllo()
      * @see Battaglia#creaGiocatore()
      */
     public void setBattaglia() {
+        this.pietreComuni = creaArrayPietre();
         this.equilibrio = new Equilibrio();
         System.out.println("Nuovo equilibrio del mondo generato");
         System.out.println("\t\t\tINIZIO DELLA PARTITA\n");
@@ -174,7 +180,7 @@ public class Battaglia {
     }
 
     /**
-     * Metodo con menu per scegliere la pietra da dare al proprio golem
+     * Metodo con menu per scegliere la pietra da dare al proprio golem dalla lista di pietre comuni
      * <p>Ripete la scelta se quella inserita non e' accettabile
      * @see Battaglia#listaPietreConteggio()
      * @see MyMenu#stampaMenuNoZero()
@@ -223,10 +229,11 @@ public class Battaglia {
      * @see Battaglia#setPosPietra1()
      * @see Battaglia#setPosPietra2()
      * @see Battaglia#nuovoGolemPerSconfitto()
+     * @see TamaGolem#isMorto()
      */
     public void turnoConPerdente() {
         int turno = 0;
-        int npareggi = 0;
+        int nPareggi = 0;
 
         System.out.println("\n" + CORNICE_ASTERISCHI);
         System.out.println("*\t\t\tINIZIO DELLO SCONTRO\t\t\t\t*");
@@ -242,14 +249,17 @@ public class Battaglia {
 
             //CONTEGGIO DEI PAREGGI, SE IN UN TURNO UN GOLEM SUBISCE DANNO SI RESETTA
             if(confrontoGolem(e1, e2))
-                npareggi = 0;
+                nPareggi = 0;
             else
-                npareggi++;
+                nPareggi++;
 
             //SE AVVENGONO P PAREGGI SI MESCOLA L'ORDINE DELLE PIETRE
-            if(npareggi >= P) {
+            if(nPareggi >= P) {
+                System.out.println(CORNICE_LINEA);
+                System.out.println("Le pietre dei Golem sono state mescolate");
                 this.giocatore1.getGolem().mischiaPietre();
                 this.giocatore2.getGolem().mischiaPietre();
+                nPareggi = 0;
             }
 
             //AUMENTA TURNO, INCREMENTA LA PIETRA DA USARE NEL COMBATTIMENTO SUCCESSIVO
@@ -390,6 +400,26 @@ public class Battaglia {
     }
 
     /**
+     * Metodo per stampare il vincitore al termine della partita
+     */
+    public void stampaVincitore() {
+        // STAMPA VITTORIA GIOCATORE 1
+        if(this.giocatore1.isSconfitto()) {
+            System.out.println(CORNICE_ASTERISCHI);
+            System.out.println("*\t\t\tGIOCATORE 2 HA VINTO\t\t\t\t*");
+            System.out.println(CORNICE_ASTERISCHI);
+        }
+        // STAMPA VITTORIA GIOCATORE 2
+        else {
+            System.out.println(CORNICE_ASTERISCHI);
+            System.out.println("*\t\t\tGIOCATORE 1 HA VINTO\t\t\t\t*");
+            System.out.println(CORNICE_ASTERISCHI);
+        }
+
+    }
+
+
+    /**
      * Metodo per stampare l'equilibrio al termine della partita
      * @see Equilibrio#stampaEquilibrio()
      */
@@ -397,6 +427,8 @@ public class Battaglia {
         System.out.println("EQUILIBRIO DELLA PARTITA: ");
         this.equilibrio.stampaEquilibrio();
     }
+
+
 
 
 

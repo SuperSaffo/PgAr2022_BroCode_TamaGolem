@@ -18,18 +18,8 @@ public class Main {
             while(!battaglia.getGiocatore1().isSconfitto() && !battaglia.getGiocatore2().isSconfitto()) {
                 battaglia.turnoConPerdente();
             }
-            // STAMPA VITTORIA GIOCATORE 1
-            if(battaglia.getGiocatore1().isSconfitto()) {
-                System.out.println("-------------------------");
-                System.out.println("GIOCATORE 2 HA VINTO");
-                System.out.println("-------------------------");
-            }
-            // STAMPA VITTORIA GIOCATORE 2
-            else {
-                System.out.println("-------------------------");
-                System.out.println("GIOCATORE 1 HA VINTO");
-                System.out.println("-------------------------");
-            }
+            //STAMPA DEL VINCITORE DELLA PARTITA
+            battaglia.stampaVincitore();
 
             // STAMPA TABELLA EQUILIBRI
             System.out.println("\n\n\n");
