@@ -82,9 +82,12 @@ public class Equilibrio {
                 if(i == j)
                     matrix[i][j] = 0;
                 else {
+                    //GENERAZIONE DEL VALORE RANDOMICO COMPRESO TRA -MAX_DANNO E MAX_DANNO, ESCLUSO 0
                     matrix[i][j] = Metodi.generateRandom(-Battaglia.MAX_DANNO, Battaglia.MAX_DANNO);
+                    //IL VALORE OPPOSTO VIENE INSERITO NELLA POSIZIONE SIMMETRICA
                     matrix[j][i] = - matrix[i][j];
                 }
+                //CONTEGGIO DELLE ITERAZIONI
                 nIter++;
             }
             /*
