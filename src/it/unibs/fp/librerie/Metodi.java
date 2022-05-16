@@ -1,13 +1,11 @@
 package it.unibs.fp.librerie;
 
-
-
 import java.util.Random;
 
 /**
- * Interfaccia con metodi utilizzati
+ * Classe con metodi utili
  */
-public interface Metodi {
+public class Metodi {
 
     /**
      * Metodo per generare un numero casuale compreso tra 2 estremi, escluso lo 0
@@ -17,7 +15,7 @@ public interface Metodi {
      * @param max Estremo superiore dell'intervallo
      * @return Ritorna il numero randomico generato
      */
-    static int generateRandom(int min, int max) {
+    public static int generateRandom(int min, int max) {
         Random rand = new Random();
         int range = max + 1 - min;
         int ii;
