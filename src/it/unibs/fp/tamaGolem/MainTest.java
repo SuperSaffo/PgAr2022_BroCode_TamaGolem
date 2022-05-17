@@ -5,21 +5,22 @@ public class MainTest {
     public static void main(String[] args) {
         Equilibrio e = new Equilibrio();
         e.generaEquilibrioControllo();
+        e.stampaEquilibrioTabella();
+
         e.stampaEquilibrio();
 
+        //System.out.println(Battaglia.N);
+        //System.out.println(Battaglia.S);
 
-        System.out.println(Battaglia.N);
-        System.out.println(Battaglia.S);
+        //System.out.println(Battaglia.P);
 
-        System.out.println(Battaglia.P);
-
-        System.out.println(Battaglia.G);
-
+        //System.out.println(Battaglia.G);
 
 
-        Battaglia b = new Battaglia();
-        b.creaArrayPietre();
 
-        b.stampaInfoPartita();
+        //Battaglia b = new Battaglia();
+        //b.creaArrayPietre();
+
+        //b.stampaInfoPartita();
     }
 }

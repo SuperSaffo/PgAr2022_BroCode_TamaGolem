@@ -421,11 +421,11 @@ public class Battaglia {
 
     /**
      * Metodo per stampare l'equilibrio al termine della partita
-     * @see Equilibrio#stampaEquilibrio()
+     * @see Equilibrio#stampaEquilibrioTabella()
      */
     public void stampaEquilibrioBattaglia() {
         System.out.println("EQUILIBRIO DELLA PARTITA: ");
-        this.equilibrio.stampaEquilibrio();
+        this.equilibrio.stampaEquilibrioTabella();
     }
 
 

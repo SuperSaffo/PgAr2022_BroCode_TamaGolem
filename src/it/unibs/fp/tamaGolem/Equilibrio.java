@@ -141,7 +141,7 @@ public class Equilibrio {
      *
      * @see Equilibrio#generaEquilibrio()
      */
-    public void stampaEquilibrio () {
+    public void stampaEquilibrioTabella() {
         //STAMPA DELLA PRIMA RIGA CON GLI ELEMENTI
         System.out.print("\t\t-->\t");
         for(int i = 0; i < Battaglia.N; i++)
@@ -164,5 +164,18 @@ public class Equilibrio {
             System.out.println();
         }
     }
+
+    public void stampaEquilibrio() {
+        for(int i = 0; i < Battaglia.N; i++) {
+            System.out.println(Elementi.getElemento(i) + ":");
+            for(int j = 0; j < Battaglia.N; j++) {
+                if(this.matrix[i][j] > 0)
+                    System.out.println(Elementi.getElemento(i) + " vince contro " + Elementi.getElemento(j) + "   \tDanno: " + matrix[i][j]);
+            }
+            System.out.println();
+        }
+    }
+
+
 
 }
