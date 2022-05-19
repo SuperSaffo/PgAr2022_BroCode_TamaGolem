@@ -1,6 +1,7 @@
 package it.unibs.fp.tamaGolem;
 
 import it.unibs.fp.librerie.MyMenu;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -103,20 +104,18 @@ public class Battaglia {
      */
     public void setBattaglia() {
         this.pietreComuni = creaArrayPietre();
-
         this.equilibrio = new Equilibrio();
         System.out.println("Nuovo equilibrio del mondo generato");
         System.out.println("\t\t\tINIZIO DELLA PARTITA\n");
         equilibrio.generaEquilibrioControllo();
-
         System.out.println(CORNICE_ASTERISCHI);
         System.out.println("*\t\t\tGIOCATORE 1 (" + G + " Golem):\t\t\t\t*");
         System.out.println(CORNICE_ASTERISCHI);
         this.giocatore1 = creaGiocatore();
-
         System.out.println(CORNICE_ASTERISCHI);
         System.out.println("*\t\t\tGIOCATORE 2 (" + G + " Golem):\t\t\t\t*");
         System.out.println(CORNICE_ASTERISCHI);
+
         this.giocatore2 = creaGiocatore();
     }
 
@@ -166,14 +165,12 @@ public class Battaglia {
      */
     public Elementi[] scegliPietre() {
         Elementi[] pietreGolem = new Elementi[P];
-
         System.out.println("Scegli " + P + " pietre per il Golem");
         for(int i = 0; i < P; i++) {
             String pietraScelta = menuPietre();
             pietreGolem[i] = Elementi.valueOf(pietraScelta);
             this.pietreComuni.remove(Elementi.valueOf(pietraScelta));
         }
-
         System.out.print("\nPietre del Golem: ");
         for(int i = 0; i < P; i++)
             System.out.print(pietreGolem[i] + "\t");
@@ -184,7 +181,7 @@ public class Battaglia {
 
     /**
      * Metodo con menu per scegliere la pietra da dare al proprio golem dalla lista di pietre comuni
-     * <p>Ripete la scelta se quella inserita non e' accettabile, se il numero delle rimanenti e' (X)
+     * <p>Ripete la scelta se quella inserita non e' accettabile
      * @see Battaglia#listaPietreConteggio()
      * @see MyMenu#stampaMenuNoZero()
      * @see MyMenu#scegliNoZero()
@@ -194,7 +191,6 @@ public class Battaglia {
         String[] pietre = listaPietreConteggio();
         MyMenu menuPietre = new MyMenu("Pietre comuni disponibili (" + this.pietreComuni.size() + "): ", pietre);
         int scelta;
-
         do {
             scelta = menuPietre.scegliNoZero();
         }while(pietre[scelta - 1].split("\t")[1].equals("(X)"));
@@ -208,7 +204,7 @@ public class Battaglia {
      *
      * @see Collections
      * @see Elementi#getElemento(int) 
-     * @return Ritorna array di String con pietre e loro quantita'
+     * @return Ritorna array di String con pietre e loro quantita' se maggiore di 0
      */
     public String[] listaPietreConteggio() {
         ArrayList<String> pietreScelta = new ArrayList<>();
@@ -226,7 +222,7 @@ public class Battaglia {
      * <p>Ogni giocatore possiede un Golem che attacca con una pietra di quelle possedute</p>
      * <p>Vengono stampati a video i 2 elementi che si scontrano</p>
      * <p>Finito il scontro con la prima pietra di ciascuno si incrementa il turno e la pietra da utilizzare</p>
-     * <p>Se avvengono P pareggi consecutivi vengono mescolati gli ordini delle pietre dei 2 golem e si continua lo scontro</p>
+     * <p>Se avvengono P pareggi consecutivi vengono mescolati gli ordini delle pietre dei </p>
      * <p>Al termine c'e' un messaggio che indica il Golem sconfitto e il giocatore sconfitto genera un nuovo Golem per il turno successivo</p>
      *
      * @see Battaglia#confrontoGolem(Elementi, Elementi)
@@ -243,7 +239,6 @@ public class Battaglia {
         System.out.println("*\t\t\tINIZIO DELLO SCONTRO\t\t\t\t*");
         System.out.println(CORNICE_ASTERISCHI + "\n");
 
-        //CONTROLLO SE ENTRAMBI I GOLEM SONO IN VITA
         while(!this.giocatore1.getGolem().isMorto() && !this.giocatore2.getGolem().isMorto()){
 
             System.out.println(CORNICE_LINEA);
@@ -258,7 +253,7 @@ public class Battaglia {
             else
                 nPareggi++;
 
-            //SE AVVENGONO P PAREGGI SI MESCOLA L'ORDINE DELLE PIETRE, AL TERMINE SI AZZERA IL NUMERO DEI PAREGGI
+            //SE AVVENGONO P PAREGGI SI MESCOLA L'ORDINE DELLE PIETRE
             if(nPareggi >= P) {
                 System.out.println(CORNICE_LINEA);
                 System.out.println("Le pietre dei Golem sono state mescolate");
@@ -267,7 +262,7 @@ public class Battaglia {
                 nPareggi = 0;
             }
 
-            //AUMENTA TURNO E INCREMENTA LA PIETRA DA USARE NEL COMBATTIMENTO SUCCESSIVO
+            //AUMENTA TURNO, INCREMENTA LA PIETRA DA USARE NEL COMBATTIMENTO SUCCESSIVO
             turno++;
             setPosPietra1();
             setPosPietra2();
@@ -313,29 +308,24 @@ public class Battaglia {
      */
     public boolean confrontoGolem(Elementi e1, Elementi e2) {
         int danno = this.equilibrio.getValoreMatrix(Elementi.getPosElemento(e1), Elementi.getPosElemento(e2));
-        //DANNO POSITIVO, VINCE GOLEM 1
         if(danno > 0) {
             System.out.println("\t- " + e1 + " > vince contro > " + e2);
             this.giocatore2.getGolem().dannoInflitto(Math.abs(danno));
 
-            //MESSAGGIO SUCCESSIVO AL CONFRONTO, SE MUORE IL GOLEM PERDENTE NON VIENE MOSTRATO IL DANNO, ALTRIMENTI SI
             if(this.giocatore2.getGolem().isMorto())
                 System.out.println("\t- Il Golem 2 e' morto");
             else
                 System.out.println("\t- Il Golem 2 ha subito un danno di: " + Math.abs(danno));
         }
-        //DANNO NEGATIVO, VINCE GOLEM 2
         else if (danno < 0) {
             System.out.println("\t- " + e2 + " > vince contro > " + e1);
             this.giocatore1.getGolem().dannoInflitto(Math.abs(danno));
 
-            //MESSAGGIO SUCCESSIVO AL CONFRONTO, SE MUORE IL GOLEM PERDENTE NON VIENE MOSTRATO IL DANNO, ALTRIMENTI SI
             if(this.giocatore1.getGolem().isMorto())
                 System.out.println("\t- Il Golem 1 e' morto");
             else
                 System.out.println("\t- Il Golem 1 ha subito un danno di: " + Math.abs(danno));
         }
-        //PAREGGIO
         else {
             System.out.println("\t- Nessun danno subito");
             return false;
@@ -400,7 +390,7 @@ public class Battaglia {
             System.out.print("\t" + Elementi.getElemento(i));
         }
 
-        System.out.println("\n+ Totale pietre comuni: " + S + ", " + S/N + " pietre per ogni elemento");
+        System.out.println("\n+ Totale pietre comuni: " + S);
         System.out.println("+ Ogni giocatore ha " + G + " Golem");
         System.out.println("+ Ogni Golem ha " + V + " HP");
         System.out.println("+ Per ogni Golem il giocatore sceglie " + P + " pietre");
@@ -431,19 +421,11 @@ public class Battaglia {
 
     /**
      * Metodo per stampare l'equilibrio al termine della partita
-     * <p>Viene stampato sia sotto forma di tabella che testuale</p>
      * @see Equilibrio#stampaEquilibrioTabella()
-     * @see Equilibrio#stampaEquilibrio()
      */
     public void stampaEquilibrioBattaglia() {
         System.out.println("EQUILIBRIO DELLA PARTITA: ");
         this.equilibrio.stampaEquilibrioTabella();
-
-        System.out.println("\n");
-        System.out.println(CORNICE_LINEA + "\n");
-        this.equilibrio.stampaEquilibrio();
-        System.out.println(CORNICE_LINEA);
-
     }
 
 

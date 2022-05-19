@@ -32,6 +32,6 @@ public enum Elementi {
      * @return Ritorna la posizione di un elemento
      */
     public static int getPosElemento(Elementi e) {
-        return Elementi.valueOf(e.toString()).ordinal();
+        return Elementi.valueOf(e.toString()).ordinal();   // ORDIANAL DA LA POS NELL'ENUM
     }
 }

@@ -3,9 +3,6 @@ package it.unibs.fp.librerie;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * Classe per input dei dati
- */
 public class InputDati {private static final String ERRORE_FORMATO = "Attenzione: il dato inserito non e' nel formato corretto";
     private static final String ERRORE_MINIMO = "Attenzione: e' richiesto un valore maggiore o uguale a ";
     private static final String ERRORE_STRINGA_VUOTA = "Attenzione: non hai inserito alcun carattere";

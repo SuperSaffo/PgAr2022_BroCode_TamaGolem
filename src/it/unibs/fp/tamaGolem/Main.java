@@ -1,5 +1,6 @@
 package it.unibs.fp.tamaGolem;
 
+
 import it.unibs.fp.librerie.InputDati;
 
 /**
@@ -13,13 +14,10 @@ public class Main {
             Battaglia battaglia = new Battaglia();
             battaglia.stampaInfoPartita();
             battaglia.setBattaglia();
-
-            //CICLO FIN QUANDO UNO DEI DUE GIOCATORI NON PERDE
+            // TERMINAZIONE CICLO FIN QUANDO UNO DEI DUE GIOCATORI NON PERDE
             while(!battaglia.getGiocatore1().isSconfitto() && !battaglia.getGiocatore2().isSconfitto()) {
-                //TURNO DELLA PARTITA
                 battaglia.turnoConPerdente();
             }
-
             //STAMPA DEL VINCITORE DELLA PARTITA
             battaglia.stampaVincitore();
 

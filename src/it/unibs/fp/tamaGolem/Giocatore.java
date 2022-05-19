@@ -3,15 +3,10 @@ package it.unibs.fp.tamaGolem;
 /**
  * Classe giocatore
  */
+
 public class Giocatore {
 
-    /**
-     * Golem posseduto dal giocatore
-     */
     private TamaGolem golem;
-    /**
-     * Numero di golem posseduti dal giocatore
-     */
     private int numeroGolem = Battaglia.G;
 
     /**
@@ -52,7 +47,7 @@ public class Giocatore {
     /**
      * Metodo che controlla che un giocatore è sconfitto
      * <p>Il giocatore si considera sconfitto se non possiede piu' golem e l'ultimo e' morto</p>
-     * @return ritorna true se il giocatore non ha più golem a disposizione e l'ultimo e' morto
+     * @return ritorna true se il giocatore non ha più golem a disposizione
      */
     public boolean isSconfitto(){
         return this.numeroGolem == 0 && this.golem.isMorto();
