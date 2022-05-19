@@ -58,4 +58,6 @@ public class Giocatore {
         return this.numeroGolem == 0 && this.golem.isMorto();
     }
 
+    //ciao
+
 }
