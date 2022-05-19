@@ -52,7 +52,4 @@ public class Giocatore {
     public boolean isSconfitto(){
         return this.numeroGolem == 0 && this.golem.isMorto();
     }
-
-    //ciao
-
 }
