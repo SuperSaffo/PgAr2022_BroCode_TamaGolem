@@ -49,12 +49,11 @@ public class TamaGolem {
 
     /**
      * Metodo per mischiare l'Array di pietre
+     * @see Collections#shuffle(List)
      */
     public void mischiaPietre() {
         List<Elementi> mischiaPietre = Arrays.asList(this.pietre);
-
         Collections.shuffle(mischiaPietre);
-
         mischiaPietre.toArray(this.pietre);
     }
 

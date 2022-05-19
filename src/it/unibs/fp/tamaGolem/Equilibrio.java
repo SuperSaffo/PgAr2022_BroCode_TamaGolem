@@ -52,11 +52,10 @@ public class Equilibrio {
      * Metodo per generare la matrice associativa
      * <p>Vengono riempite N-1 righe e N-1 colonne con valori casuali</p>
      * <p>L'ultima colonna e' data dal numero necessario a fare si che la somma della riga equivalga a 0</p>
-     * <p>se l'ultimo numero risulta Maggiore o Minore della danno massimo o -massimo oppure 0 viene generata una nuova riga</p>
-     * <p>Se avvengono troppe iterazioni del ciclo viene ritornato falso</p>
-     * <p>La matrice possiede sia numeri positivi che negativi,
-     * i numeri negativi vengono utilizzati per calcolare piu' facilmente la matrice
-     * e per calcolare piu' facilmente il vincitore dello scontro tra 2 Golem</p>
+     * <p>Se l'ultimo numero di ogni riga risulta maggiore del danno massimo o minore del -massimo oppure 0 viene generata una nuova riga</p>
+     * <p>Se avvengono troppe iterazioni del ciclo viene ritornato falso, puo' avvenire se il valore finale della penultima riga non rispetta i controlli</p>
+     * <p>La matrice possiede sia numeri positivi che negativi, i numeri negativi vengono utilizzati per calcolare piu' facilmente la matrice
+     * e per calcolare piu' facilmente il vincitore dello scontro tra 2 Golem, nella stampa i valori negativi vengono sostituiti con )</p>
      *
      * @see Metodi#generateRandom(int, int)
      * @see Equilibrio#calcolaSomma(int[], int)
@@ -134,7 +133,7 @@ public class Equilibrio {
     }
 
     /**
-     * Metodo per stampare l'equilibrio a fine programma
+     * Metodo per stampare l'equilibrio a fine programma sotto forma di tabella
      * <p>Vengono stampati inizialmente su una riga gli elementi</p>
      * <p>Prima di ogni riga viene stampato l'elemento a cui corrisponde</p>
      * <p>I valori negativi vengono stampati come zeri per semplificare la lettura dell'equilibrio</p>
@@ -165,12 +164,15 @@ public class Equilibrio {
         }
     }
 
+    /**
+     * Metodo per stampare l'equilibrio in forma testuale
+     */
     public void stampaEquilibrio() {
         for(int i = 0; i < Battaglia.N; i++) {
             System.out.println(Elementi.getElemento(i) + ":");
             for(int j = 0; j < Battaglia.N; j++) {
                 if(this.matrix[i][j] > 0)
-                    System.out.println(Elementi.getElemento(i) + " vince contro " + Elementi.getElemento(j) + "   \tDanno: " + matrix[i][j]);
+                    System.out.println(Elementi.getElemento(i) + " vince contro " + Elementi.getElemento(j) + "\t\tDanno: " + matrix[i][j]);
             }
             System.out.println();
         }
